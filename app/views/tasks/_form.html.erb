@@ -1,0 +1,33 @@
+<%= form_for(@task) do |f| %>
+  <% if @task.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@task.errors.count, "error") %> prohibited this task from being saved:</h2>
+
+      <ul>
+      <% @task.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :reasonable_expectation %><br />
+    <%= f.time_select :reasonable_expectation %>
+  </div>
+  <div class="field">
+    <%= f.label :is_active %><br />
+    <%= f.check_box :is_active %>
+  </div>
+  <div class="field">
+    <%= f.label :task_inventory %><br />
+    <%= f.collection_select :task_inventory_id, @task_inventories, :id, :name, prompt: true %>
+  </div>
+  <div class="field">
+    <%= f.label :team %><br />
+    <%= f.collection_select :team_id, @teams, :id, :name, prompt: true %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

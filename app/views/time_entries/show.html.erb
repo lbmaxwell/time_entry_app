@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Time:</b>
+  <%= @time_entry.time %>
+</p>
+
+<p>
+  <b>Number processed:</b>
+  <%= @time_entry.number_processed %>
+</p>
+
+<p>
+  <b>Effective date:</b>
+  <%= @time_entry.effective_date %>
+</p>
+
+<p>
+  <b>Task:</b>
+  <%= @time_entry.task %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @time_entry.user %>
+</p>
+
+
+<%= link_to 'Edit', edit_time_entry_path(@time_entry) %> |
+<%= link_to 'Back', time_entries_path %>

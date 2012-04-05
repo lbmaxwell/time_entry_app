@@ -1,0 +1,23 @@
+<h1>Listing task_inventories</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @task_inventories.sort!.each do |task_inventory| %>
+  <tr>
+    <td><%= task_inventory.name %></td>
+    <td><%= link_to 'Show', task_inventory %></td>
+    <td><%= link_to 'Edit', edit_task_inventory_path(task_inventory) %></td>
+    <td><%= link_to 'Destroy', task_inventory, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Task inventory', new_task_inventory_path %>

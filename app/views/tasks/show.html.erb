@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Reasonable expectation:</b>
+  <%= @task.reasonable_expectation %>
+</p>
+
+<p>
+  <b>Is active:</b>
+  <%= @task.is_active %>
+</p>
+
+<p>
+  <b>Task inventory:</b>
+  <%= @task.task_inventory %>
+</p>
+
+<p>
+  <b>Team:</b>
+  <%= @task.team %>
+</p>
+
+
+<%= link_to 'Edit', edit_task_path(@task) %> |
+<%= link_to 'Back', tasks_path %>

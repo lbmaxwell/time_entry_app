@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  time: 2012-04-04 13:04:23
+  number_processed: 1
+  effective_date: 2012-04-04
+  task: 
+  user: 
+
+two:
+  time: 2012-04-04 13:04:23
+  number_processed: 1
+  effective_date: 2012-04-04
+  task: 
+  user: 

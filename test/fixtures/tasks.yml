@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  reasonable_expectation: 2012-04-04 13:04:21
+  is_active: false
+  task_inventory: 
+  team: 
+
+two:
+  reasonable_expectation: 2012-04-04 13:04:21
+  is_active: false
+  task_inventory: 
+  team: 

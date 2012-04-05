@@ -1,0 +1,31 @@
+/* header */
+
+.header{
+  height: 107px;
+  background-color:white;
+#logo {
+  float: left;
+  width: 353px;
+  background-image:url('/assets/mde_logo.jpg');
+  background-repeat:no-repeat;
+  }
+
+.nav-links {
+  list-style-type:none;
+  float:right;
+  margin:0;
+  padding:0;
+
+  li {
+  display:inline;
+  }
+  }
+}
+
+/* body */
+.body{
+}
+
+
+/* footer */
+

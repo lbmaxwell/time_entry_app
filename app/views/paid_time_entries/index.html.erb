@@ -1,0 +1,29 @@
+<h1>Listing paid_time_entries</h1>
+
+<table>
+  <tr>
+    <th>Time</th>
+    <th>Effective date</th>
+    <th>User</th>
+    <th>Team</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @paid_time_entries.each do |paid_time_entry| %>
+  <tr>
+    <td><%= paid_time_entry.time %></td>
+    <td><%= paid_time_entry.effective_date %></td>
+    <td><%= paid_time_entry.user %></td>
+    <td><%= paid_time_entry.team %></td>
+    <td><%= link_to 'Show', paid_time_entry %></td>
+    <td><%= link_to 'Edit', edit_paid_time_entry_path(paid_time_entry) %></td>
+    <td><%= link_to 'Destroy', paid_time_entry, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Paid time entry', new_paid_time_entry_path %>

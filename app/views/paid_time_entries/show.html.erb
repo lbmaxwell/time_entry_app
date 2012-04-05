@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Time:</b>
+  <%= @paid_time_entry.time %>
+</p>
+
+<p>
+  <b>Effective date:</b>
+  <%= @paid_time_entry.effective_date %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @paid_time_entry.user %>
+</p>
+
+<p>
+  <b>Team:</b>
+  <%= @paid_time_entry.team %>
+</p>
+
+
+<%= link_to 'Edit', edit_paid_time_entry_path(@paid_time_entry) %> |
+<%= link_to 'Back', paid_time_entries_path %>

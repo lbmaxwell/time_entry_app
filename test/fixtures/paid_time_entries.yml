@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  time: 2012-04-04 13:04:27
+  effective_date: 2012-04-04
+  user: 
+  team: 
+
+two:
+  time: 2012-04-04 13:04:27
+  effective_date: 2012-04-04
+  user: 
+  team: 
