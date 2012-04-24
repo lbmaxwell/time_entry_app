@@ -1,5 +1,57 @@
-<h1>New time_entry</h1>
+<div id="ajaxtest"></div>
+<h1>New Time Entry</h1>
+<table>
+  <tr>
+    <td id="starttimelabel"></td>
+    <td id="starttime"></td>
+  <tr>
+  <tr>
+    <td id="stoptimelabel"></td>
+    <td id="stoptime"></td>
+  </tr>
+  <tr>
+    <td id="totaltimelabel"></td>
+    <td id="totaltime"></td>
+  </tr></table>
+<button id="starttimebutton" type="button" onclick="startTimer()">Start Timer</button>
+<button id="stoptimebutton" type="button" style="display: none" onclick="stopTimer()">Stop Timer</button>
+<script type="text/javascript">
+  var startTime = new Date();
+
+  function startTimer()
+  {
+    startTime = new Date();
+    document.getElementById("starttimelabel").innerHTML="<b>Start time: </b>"
+    document.getElementById("starttime").innerHTML=startTime
+    document.getElementById("starttimebutton").style.display = "none"
+    document.getElementById("stoptimebutton").style.display = "inline"
+  }
+
+  function stopTimer()
+  {
+    var stopTime = new Date();
+    document.getElementById("stoptimelabel").innerHTML="<b>Stop time: </b>"
+    document.getElementById("stoptime").innerHTML=stopTime
+    document.getElementById("stoptimebutton").style.display = "none"
+
+    //Find time difference in seconds
+    totalTime = parseInt((stopTime-startTime)/(1000));
+    totalTimeMinutes = parseInt(totalTime / 60)
+    totalTimeSeconds = (totalTime % 60) + 1
+
+    document.getElementById("totaltimelabel").innerHTML="<b>Time spent: </b>"
+    document.getElementById("totaltime").innerHTML=totalTimeMinutes + " Minutes, " + totalTimeSeconds + " Seconds"
+    document.getElementById("minutes").value = totalTimeMinutes
+    document.getElementById("time_entry_seconds").value = totalTimeSeconds
+  }
+</script>
 
 <%= render 'form' %>
 
-<%= link_to 'Back', time_entries_path %>
+<%= link_to 'Back to all time entries', time_entries_path %>
+<br />
+<br />
+<br />
+<br />
+
+<%= render 'show_last' unless @last_time_entry.nil? %>

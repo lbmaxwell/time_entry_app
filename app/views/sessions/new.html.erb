@@ -1,3 +1,9 @@
+<% if flash[:notice] %>
+    <p class="notice"><%= flash[:notice] %></p>
+  <% end %>
+  <% if flash[:error] %>
+    <p class="error"><%= flash[:error] %></p>
+<% end %>
 <h1>Sign in</h1>
 <div>
   <%= form_for(:session, url: sessions_path) do |f| %>

@@ -13,7 +13,7 @@
 
   <div class="field">
     <%= f.label :username %><br />
-    <%= f.text_field :username %>
+    <%= f.text_field :username, disabled: @is_username_control_disabled%>
   </div>
   <div class="field">
     <%= f.label :password %><br />

@@ -1,8 +1,12 @@
-<h1>Listing tasks</h1>
-
+<h1>Tasks for team "<%= @selected_team_name %>"</h1>
+<%= form_tag("/tasks", :method => "get", :action => "index") do %>
+  <%= label_tag :team %>
+  <%= select_tag "team", options_from_collection_for_select(@teams, "id", "name"), prompt: "Select a team..." %>
+  <%= submit_tag "Show Tasks for Team" %>
+<% end %>
 <table>
   <tr>
-    <th>Reasonable expectation</th>
+    <th>Reasonable expectation (minutes)</th>
     <th>Is active</th>
     <th>Task inventory</th>
     <th>Team</th>
@@ -17,13 +21,15 @@
     <td><%= task.is_active %></td>
     <td><%= task.task_inventory.name %></td>
     <td><%= task.team.name %></td>
-    <td><%= link_to 'Show', task %></td>
+    <td><% link_to 'Show', task %></td>
     <td><%= link_to 'Edit', edit_task_path(task) %></td>
-    <td><%= link_to 'Destroy', task, confirm: 'Are you sure?', method: :delete %></td>
+    <td><% link_to 'Destroy', task, confirm: 'Are you sure?', method: :delete %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Task', new_task_path %>
+<%= link_to 'Assign task to team', new_task_path %><br />
+<p>
+<%= link_to 'Create new task', new_task_inventory_path %>

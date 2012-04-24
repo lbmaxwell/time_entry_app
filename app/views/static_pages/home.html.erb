@@ -1,0 +1,43 @@
+<% if flash[:notice] %>
+    <p class="notice"><%= flash[:notice] %></p>
+  <% end %>
+  <% if flash[:error] %>
+    <p class="error"><%= flash[:error] %></p>
+<% end %>
+
+<p>
+  <%= form_tag("/home/", :method => "get", :action => "home") do %>
+    <%= label_tag :start_date %>
+    <%= select_date start_date, :prefix => :start_date %><br />
+    <%= label_tag :end_date %>
+    <%= select_date end_date, :prefix => :end_date %><br />
+    <%= submit_tag "Filter" %>
+  <% end %>
+<h1>Tally Sheet for <%= start_date %> to <%= end_date %></h1>
+<p>
+<%= link_to 'New Time entry', new_time_entry_path %>
+<table border="1">
+  <tr>
+    <th>Minutes</th>
+    <th>Number processed</th>
+    <th>Effective date</th>
+    <th>Task</th>
+    <th>User</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @time_entries.each do |time_entry| %>
+  <tr>
+    <td><%= time_entry.minutes %></td>
+    <td><%= time_entry.number_processed %></td>
+    <td><%= time_entry.effective_date %></td>
+    <td><%= time_entry.task.name %></td>
+    <td><%= time_entry.user.username %></td>
+    <td><%= link_to 'Comments', comments_path %></td>
+    <td><%= link_to 'Edit', edit_time_entry_path(time_entry) %></td>
+    <td><%= link_to 'Delete', time_entry, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>

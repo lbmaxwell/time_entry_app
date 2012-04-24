@@ -13,11 +13,12 @@
 
   <div class="field">
     <%= f.label :reasonable_expectation %><br />
-    <%= f.time_select :reasonable_expectation %>
+    <%= f.number_field :expectation_in_seconds %>
+    <%= f.label :seconds %>
   </div>
   <div class="field">
     <%= f.label :is_active %><br />
-    <%= f.check_box :is_active %>
+    <%= f.check_box :is_active, checked: true %>
   </div>
   <div class="field">
     <%= f.label :task_inventory %><br />

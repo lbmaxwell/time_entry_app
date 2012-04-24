@@ -1,8 +1,15 @@
 class TasksController < ApplicationController
+  authorize_resource
   # GET /tasks
   # GET /tasks.json
-  def index
-    @tasks = Task.all
+  def index    
+    @teams = Team.all
+    if params[:team].nil?
+      @selected_team_name = "Team not selected"
+    else
+      @selected_team_name = Team.find(params[:team]).name
+    end
+    @tasks = Task.where(team_id: params[:team])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -26,7 +33,7 @@ class TasksController < ApplicationController
   def new
     @task = Task.new
     @task_inventories = TaskInventory.all
-    @teams = Team.all
+    @teams = current_user.teams_managed
 
     respond_to do |format|
       format.html # new.html.erb
@@ -37,12 +44,17 @@ class TasksController < ApplicationController
   # GET /tasks/1/edit
   def edit
     @task = Task.find(params[:id])
+    @teams = current_user.teams_managed
+    @task_inventories = TaskInventory.all
   end
 
   # POST /tasks
   # POST /tasks.json
   def create
     @task = Task.new(params[:task])
+    @task_inventories = TaskInventory.all
+    @teams = current_user.teams_managed
+
 
     respond_to do |format|
       if @task.save
@@ -59,6 +71,8 @@ class TasksController < ApplicationController
   # PUT /tasks/1.json
   def update
     @task = Task.find(params[:id])
+    @task_inventories = TaskInventory.all
+    @teams = current_user.teams_managed
 
     respond_to do |format|
       if @task.update_attributes(params[:task])

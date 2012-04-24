@@ -2,7 +2,7 @@
 
 .header{
   height: 107px;
-  background-color:white;
+  background-color: white;
 #logo {
   float: left;
   width: 353px;
@@ -22,10 +22,18 @@
   }
 }
 
-/* body */
-.body{
+.notice{
+  color: red
 }
 
+.error{
+  color: red
+}
+
+/* body */
+.body{
+  background-color: white;
+}
 
 /* footer */
 

@@ -7,8 +7,9 @@
         <ul class="nav-links">
           <% if signed_in? %>
             <li>Welcome, <b><%= current_user.username %></b><li>
-            <li><%= link_to "Admin",    '#' %></li>
-            <li><%= link_to "Home",    '#' %></li>
+            <li><%= link_to "Admin",   admin_path if current_user.admin?%></li>
+            <li><%= link_to "Change my password",    edit_user_path(@current_user) %></li>
+            <li><%= link_to "Home",    home_path %></li>
             <li><%= link_to "Signout", signout_path, method: "delete" %></li>
           <% else %>
             <li><%= link_to "Sign in", signin_path %></li>

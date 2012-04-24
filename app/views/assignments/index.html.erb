@@ -1,5 +1,10 @@
-<h1>Listing assignments</h1>
-
+<h1>Listing assignments for</h1>
+<%= form_tag("/assignments", :method => "get", :action => "index") do %>
+  <%= label_tag :user %>
+  <%= select_tag "user", options_from_collection_for_select(@users, "id", "username"), prompt: "Select a user..." %>
+  <%= submit_tag "Show Assignments" %>
+<% end %>
+<p>
 <table>
   <tr>
     <th>Start date</th>
@@ -19,9 +24,9 @@
     <td><%= assignment.user.username %></td>
     <td><%= assignment.role.name %></td>
     <td><%= assignment.team.name %></td>
-    <td><%= link_to 'Show', assignment %></td>
+    <td><% link_to 'Show', assignment %></td>
     <td><%= link_to 'Edit', edit_assignment_path(assignment) %></td>
-    <td><%= link_to 'Destroy', assignment, confirm: 'Are you sure?', method: :delete %></td>
+    <td><% link_to 'Destroy', assignment, confirm: 'Are you sure?', method: :delete %></td>
   </tr>
 <% end %>
 </table>
@@ -29,3 +34,5 @@
 <br />
 
 <%= link_to 'New Assignment', new_assignment_path %>
+<p>
+<%= link_to 'New user', new_user_path %>

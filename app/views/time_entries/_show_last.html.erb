@@ -1,0 +1,30 @@
+<h2>Last time entry</h2>
+<p id="notice"><%= notice %></p>
+
+<%= link_to 'Edit', edit_time_entry_path(@last_time_entry) %>
+<p>
+  <b>Minutes:</b>
+  <%= @last_time_entry.minutes %>
+</p>
+
+<p>
+  <b>Number processed:</b>
+  <%= @last_time_entry.number_processed %>
+</p>
+
+<p>
+  <b>Effective date:</b>
+  <%= @last_time_entry.effective_date %>
+</p>
+
+<p>
+  <b>Task:</b>
+  <%= @last_time_entry.task.name %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @last_time_entry.user.username %>
+</p>
+
+

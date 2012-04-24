@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
-  before_filter :signed_in_user
-
+  authorize_resource
   # GET /users
   # GET /users.json
   def index
@@ -37,13 +36,21 @@ class UsersController < ApplicationController
   # GET /users/1/edit
   def edit
     @user = User.find(params[:id])
+    @is_username_control_disabled = "true"
   end
+
+  def change_team
+    #params[:id] = current_user.id if params[:id].nil?
+    @user = User.find(current_user.id)
+    @teams = current_user.teams
+    #@user.skip_password_validation = true
+  end  
 
   # POST /users
   # POST /users.json
   def create
     @user = User.new(params[:user])
-
+    
     respond_to do |format|
       if @user.save
         format.html { redirect_to @user, notice: 'User was successfully created.' }
@@ -59,6 +66,9 @@ class UsersController < ApplicationController
   # PUT /users/1.json
   def update
     @user = User.find(params[:id])
+    @is_username_control_disabled = "true"
+    @user.skip_password_validation = true if params[:skip_password_validation]
+
 
     respond_to do |format|
       if @user.update_attributes(params[:user])
@@ -80,14 +90,6 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.html { redirect_to users_url }
       format.json { head :no_content }
-    end
-  end
-
-  private
-
-  def signed_in_user
-    unless signed_in?
-      redirect_to signin_path, notice: "Please sign in."
     end
   end
 end

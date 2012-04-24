@@ -1,6 +1,12 @@
 TimeEntryApp::Application.routes.draw do
-  #root to: 'static_pages#home'
+  match '/home', to: 'static_pages#home'
+  match '/admin', to: 'static_pages#admin'
+  match '/operating_report', to: 'static_pages#operating_report'
+  match '/change_team', to: 'users#change_team'
+
+  root to: 'static_pages#home'
   resources :sessions, only: [:new, :create, :destroy]
+
   match '/signin', to: 'sessions#new'
   match '/signout', to: 'sessions#destroy', via: :delete
 
@@ -21,6 +27,10 @@ TimeEntryApp::Application.routes.draw do
   resources :teams
 
   resources :users
+
+  #Routes for AJAX
+  match '/users_for_team', to: 'static_pages#users_for_team'
+  match '/is_number_processed_enabled', to: 'time_entries#is_number_processed_enabled'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

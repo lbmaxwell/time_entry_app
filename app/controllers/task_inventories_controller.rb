@@ -1,4 +1,5 @@
 class TaskInventoriesController < ApplicationController
+  authorize_resource
   # GET /task_inventories
   # GET /task_inventories.json
   def index
