@@ -12,20 +12,22 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :time %><br />
-    <%= f.time_select :time %>
+    <%= number_field_tag :hours, 8, min: 0 %>
+    <%= f.label :hours %><br />
+    <%= number_field_tag :minutes, 0, min: 0 %>
+    <%= f.label :minutes %><br />
+  </div>
+  <div class="field">
+    <%= f.label :overtime? %><br />
+    <%= f.check_box :is_overtime %>
   </div>
   <div class="field">
     <%= f.label :effective_date %><br />
     <%= f.date_select :effective_date %>
   </div>
   <div class="field">
-    <%= f.label :user %><br />
-    <%= f.text_field :user %>
-  </div>
-  <div class="field">
     <%= f.label :team %><br />
-    <%= f.text_field :team %>
+    <%= f.collection_select :team_id, @teams, :id, :name %>
   </div>
   <div class="actions">
     <%= f.submit %>

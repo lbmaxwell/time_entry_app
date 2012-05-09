@@ -50,6 +50,7 @@ end
   # POST /assignments
   # POST /assignments.json
   def create
+    params[:assignment][:end_date] = nil if params[:no_end_date]
     @assignment = Assignment.new(params[:assignment])
     @users = User.all
     @roles = Role.all
@@ -69,6 +70,7 @@ end
   # PUT /assignments/1
   # PUT /assignments/1.json
   def update
+    params[:assignment][:end_date] = nil if params[:no_end_date]
     @assignment = Assignment.find(params[:id])
 
     respond_to do |format|

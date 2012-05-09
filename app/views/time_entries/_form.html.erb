@@ -17,14 +17,14 @@
 
     <%= f.collection_select :task_id, @tasks, :id, :name, prompt: true %>
       </div>  <div class="field">
-    <%= f.label :minutes %>
-    <%= number_field_tag :minutes, min: 0 %>
-    <%= f.label :seconds %>
-    <%= f.number_field :seconds, min: 0 %>
+    <%= f.label :minutes, hidden: true%>
+    <%= number_field_tag :minutes, nil, min: 0, hidden: true %>
+    <%= f.label :seconds, hidden: true %>
+    <%= f.number_field :seconds, min: 0, hidden: true %>
   </div>
   <div class="field">
-    <%= f.label :number_processed %><br />
-    <%= f.number_field :number_processed, value: 1, min: 0 %>
+    <%= f.label :number_processed, hidden: true %><br />
+    <%= f.number_field :number_processed, value: 1, min: 0, hidden: true %>
   </div>
   <div class="field">
     <%= f.label :effective_date %><br />

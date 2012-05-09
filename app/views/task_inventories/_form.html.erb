@@ -15,6 +15,12 @@
     <%= f.label :name %><br />
     <%= f.text_field :name %>
   </div>
+  <div class="field">
+    <%= f.radio_button :is_direct, true %>    
+    <%= f.label :direct %>
+    <%= f.radio_button :is_direct, false %>
+    <%= f.label :indirect %>
+  </div>
   <div class="actions">
     <%= f.submit "Create new task" %>
   </div>

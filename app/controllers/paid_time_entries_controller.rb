@@ -1,4 +1,5 @@
 class PaidTimeEntriesController < ApplicationController
+  authorize_resource
   # GET /paid_time_entries
   # GET /paid_time_entries.json
   def index
@@ -25,6 +26,7 @@ class PaidTimeEntriesController < ApplicationController
   # GET /paid_time_entries/new.json
   def new
     @paid_time_entry = PaidTimeEntry.new
+    @teams = current_user.teams
 
     respond_to do |format|
       format.html # new.html.erb
@@ -40,6 +42,9 @@ class PaidTimeEntriesController < ApplicationController
   # POST /paid_time_entries
   # POST /paid_time_entries.json
   def create
+    @teams = current_user.teams
+    params[:paid_time_entry][:user_id] = current_user.id
+    params[:paid_time_entry][:minutes] = ((params[:hours].to_i * 60) + params[:minutes].to_i)
     @paid_time_entry = PaidTimeEntry.new(params[:paid_time_entry])
 
     respond_to do |format|

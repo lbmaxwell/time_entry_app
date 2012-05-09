@@ -1,8 +1,8 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <b>Time:</b>
-  <%= @paid_time_entry.time %>
+  <b>Hours:</b>
+  <%= @paid_time_entry.hours %>
 </p>
 
 <p>
@@ -12,12 +12,12 @@
 
 <p>
   <b>User:</b>
-  <%= @paid_time_entry.user %>
+  <%= @paid_time_entry.user.username %>
 </p>
 
 <p>
   <b>Team:</b>
-  <%= @paid_time_entry.team %>
+  <%= @paid_time_entry.team.name %>
 </p>
 
 

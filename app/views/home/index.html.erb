@@ -1,0 +1,6 @@
+<p>
+<%= render 'form'  %>
+<h1>Tally Sheet for <%= @start_date %> to <%= @end_date %></h1>
+<p>
+<%= link_to 'New Time entry', new_time_entry_path %>
+<%= render 'table' %>

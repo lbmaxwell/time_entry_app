@@ -1,0 +1,18 @@
+//$('#ajaxtest').html("<%= @is_task_direct  %>")
+<% if @is_task_direct %>
+  $('[for$="time_entry_number_processed"]').attr('hidden', false)
+  $('#time_entry_number_processed').attr('hidden', false)
+  $('#time_entry_number_processed').val('1')
+  $('[for$="time_entry_minutes"]').attr('hidden', true)
+  $('#minutes').attr('hidden', true)
+  $('[for$="time_entry_seconds"]').attr('hidden', true)
+  $('#time_entry_seconds').attr('hidden', true)
+<% else %>
+  $('[for$="time_entry_number_processed"]').attr('hidden', true)
+  $('#time_entry_number_processed').attr('hidden', true)
+  $('#time_entry_number_processed').val('')
+  $('[for$="time_entry_minutes"]').attr('hidden', false)
+  $('#minutes').attr('hidden', false)
+  $('[for$="time_entry_seconds"]').attr('hidden', false)
+  $('#time_entry_seconds').attr('hidden', false)
+<% end %>

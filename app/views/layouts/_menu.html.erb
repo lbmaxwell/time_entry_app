@@ -1,0 +1,12 @@
+<ul id="menu">
+  <% if signed_in? %>
+    <li><%= link_to "Home",    home_path %></li>
+    <li><%= link_to "Task entry", new_time_entry_path  %></li>
+    <li><%= link_to "Time entry", new_paid_time_entry_path  %></li>
+    <li><%= link_to "Change my password",    edit_user_path(@current_user) %></li>
+    <li><%= link_to "Operating Report",  operating_report_path %></li>
+    <% if current_user.admin? %>
+      <li><%= link_to "Admin",   admin_path %></li>
+    <% end %>
+  <% end %>
+</ul>

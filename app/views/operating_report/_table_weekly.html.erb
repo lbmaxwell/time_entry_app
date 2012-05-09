@@ -1,0 +1,42 @@
+<h2>Weekly Operating Report for <%= start_date %> to <%= end_date %><h2>
+<h3>Team: <%= @team.name  %></h3>
+<h3>Users: <%= users_string %></h3>
+<table border="1">
+  <tr>
+    <td>Reasonable Expectation*</td>
+    <% @tasks.each do |task| %>
+      <td><%= task.reasonable_expectation %></td>
+    <% end %>
+  </tr>
+  <tr>
+  <td><b>For the week ended</b></td>
+    <% @tasks.each do |task| %>
+      <% if task.is_direct? then units = ' (Count)' else units = ' (Minutes)' end %>
+      <td><b><%= task.name %></b> <%= units %></td>
+    <% end %>
+  </tr>
+  <% @last_days_of_week_selection.each do |date| %>
+    <tr>
+      <td><%= date %></td>
+      <% @tasks.each do |task| %>
+         <td><%= @table_data[date][task.id] %></td>
+      <% end %>
+    </tr>
+  <% end %>
+  <tr>
+    <td><b>Total Volume:</b></td>
+    <% @tasks.each do |task| %>
+      <% if task.is_direct? %>
+        <td><b><%= @table_data[:total_volume][task.id] %></b></td>
+      <% else %>
+        <td align="center"><b>-</b></td>
+      <% end %>
+    <% end %>
+  </tr>
+  <tr>
+    <td><b>Total Minutes:</b></td>
+    <% @tasks.each do |task| %>
+    <td><b> <%= (@table_data[:total_time][task.id].to_f / 60).round(3) %></b></td>
+    <% end %>
+  </tr>
+</table>

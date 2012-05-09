@@ -7,16 +7,22 @@ class Ability
       can :manage, :all
       cannot :destroy, :all
     else
+      can :new, Comment
+      can :create, Comment
+      can :edit, Comment
+      can :update, Comment
+      can :destroy, Comment
       can :new, TimeEntry
       can :create, TimeEntry
       can :edit, TimeEntry
       can :update, TimeEntry
       can :destroy, TimeEntry
+      can :show, TimeEntry
+      can :is_task_direct, TimeEntry
       can :home, StaticPagesController #useless, b/c skip_auth_check in controller
       can :edit, User, user_id: user.id
       can :update, User, user_id: user.id
       can :change_team, User, user_id: user.id
-      can :home, StaticPages
     end
     # Define abilities for the passed in user here. For example:
     #

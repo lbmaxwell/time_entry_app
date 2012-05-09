@@ -4,4 +4,4 @@
 jQuery ->
   $('#time_entry_task_id').change ->
     task_id = $('#time_entry_task_id :selected').val()
-    $.post('/is_number_processed_enabled', {task_id: task_id}, null, "script")
+    $.post('/is_task_direct', {task_id: task_id}, null, "script")

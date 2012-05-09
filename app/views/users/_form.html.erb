@@ -23,7 +23,11 @@
     <%= f.label :password_confirmation %><br />
     <%= f.password_field :password_confirmation %>
   </div>
-  <div class="actions">
+  <div class="field">
+    <%= f.label :default_team %><br />
+    <%= f.collection_select :team_id, @teams, :id, :name %>
+  </div>
+<div class="actions">
     <%= f.submit %>
   </div>
 <% end %>

@@ -1,25 +1,44 @@
 /* header */
 
 .header{
-  height: 107px;
-  background-color: white;
+  height: 118px;
+  background-color: white;//#0190d6;
+  //border: 5px solid black;
+  padding: 0px;
+
 #logo {
   float: left;
   width: 353px;
+  height: 107px;
   background-image:url('/assets/mde_logo.jpg');
   background-repeat:no-repeat;
+  padding: 0px;
+  //border: 5px solid yellow;
+  margin: 0px;
   }
+#nav-links{
+ //border: 5px solid purple;
+  margin: 20px 20px 0px 20px;
+}
 
 .nav-links {
   list-style-type:none;
   float:right;
-  margin:0;
+  margin: 200;
   padding:0;
+  //border: 5px solid brown;
 
   li {
   display:inline;
   }
   }
+}
+
+#header {
+
+  //border: 5px solid red;
+  margin: 20px 20px 0px 20px;
+  padding: 0px;
 }
 
 .notice{
@@ -29,11 +48,68 @@
 .error{
   color: red
 }
+/* menu */
+#menucontainer{
+  float: right;
+  vertical-align: bottom;
+  display: inline;
+  margin: 10px 10px 10px 10px;
+  border: 5px solid white;
+  padding: 0px;
+}
+#menu {
+  
+  float: left;
+  border: 5px solid white;
+  list-style-type:none;
+  padding: 0px;
+  margin: 0px;
+}
+ul#menu li  {
+    padding: 10px 20px;
+    font-weight: bold;
+    text-decoration: none;
+    line-height: 2.8em;
+    background-color: #e8eef4;
+    color: #0190d6;//#034af3;
+    border-radius: 0px 0px 0 0;
+    display: inline;
 
+}
 /* body */
 .body{
-  background-color: white;
+  background-color: #0190d6;//#99ccff;
+//  padding: 0px;
+//  margin: 0px;
+//  border: 5px solid green;
 }
 
-/* footer */
+.operating_report_table
+{
+  background-color: white;
+  table,th,td,tr { border: 1px solid black; }
+  th { font-weight: bold; }
 
+  .direct{
+    background-color: yellow;
+  }
+  .indirect{
+    background-color: #00FFCC;
+  }
+}
+
+#main{
+  background-color: white;
+  padding: 0px 0px 0px 0px;
+  border: 20px solid white;
+  margin: 0px 20px 20px 20px;
+}
+
+.field{
+  background-color: white;
+  margin: 20px 20px 20px 0px;
+}
+/* footer */
+#footer{
+  margin: 20px 20px 20px 20px;
+}

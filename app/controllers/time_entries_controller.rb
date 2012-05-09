@@ -17,6 +17,7 @@ class TimeEntriesController < ApplicationController
   # GET /time_entries/1.json
   def show
     @time_entry = TimeEntry.find(params[:id])
+    @comments = Comment.where(time_entry_id: params[:id]).reverse!
 
     respond_to do |format|
       format.html # show.html.erb
@@ -47,8 +48,15 @@ class TimeEntriesController < ApplicationController
   # POST /time_entries
   # POST /time_entries.json
   def create
+    task = Task.find(params[:time_entry][:task_id])
+
+    if task.task_inventory.is_direct
+      params[:time_entry][:seconds] = task.expectation_in_seconds
+    else
+      params[:time_entry][:seconds] = calculate_seconds_from_form
+    end
+
     params[:time_entry][:user_id] = current_user.id
-    params[:time_entry][:seconds] = calculate_seconds_from_form
     params[:time_entry][:team_id] = current_user.team.id
     @tasks = current_user.team.tasks
     @time_entry = TimeEntry.new(params[:time_entry])
@@ -92,9 +100,9 @@ class TimeEntriesController < ApplicationController
     end
   end
 
-  def is_number_processed_enabled #Used to respond to AJAX request for new time entries form
+  def is_task_direct #Used to handle AJAX requests for new time entries form
     task = Task.find(params[:task_id])
-    @is_number_processed_enabled = task.task_inventory.track_count
+    @is_task_direct = task.task_inventory.is_direct
 
     respond_to do |format|
       format.js

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120419125652) do
+ActiveRecord::Schema.define(:version => 20120503203631) do
 
   create_table "assignments", :force => true do |t|
     t.date     "start_date"
@@ -39,12 +39,13 @@ ActiveRecord::Schema.define(:version => 20120419125652) do
   add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
 
   create_table "paid_time_entries", :force => true do |t|
-    t.time     "time"
+    t.integer  "minutes"
     t.date     "effective_date"
     t.integer  "user_id"
     t.integer  "team_id"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
+    t.boolean  "is_overtime"
   end
 
   add_index "paid_time_entries", ["team_id"], :name => "index_paid_time_entries_on_team_id"
@@ -58,9 +59,9 @@ ActiveRecord::Schema.define(:version => 20120419125652) do
 
   create_table "task_inventories", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-    t.boolean  "track_count"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.boolean  "is_direct"
   end
 
   create_table "tasks", :force => true do |t|

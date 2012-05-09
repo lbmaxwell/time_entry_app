@@ -16,4 +16,12 @@ class Task < ActiveRecord::Base
   def reasonable_expectation
     (self.expectation_in_seconds.to_f / 60).round(2)
   end
+
+  def is_direct?
+    (self.task_inventory.is_direct)
+  end
+
+  def is_direct
+    self.is_direct?
+  end
 end

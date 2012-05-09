@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
 
   validates :password, length: { within: 6..40 }, :unless => :skip_password_validation
   validates :password_confirmation, presence: true, :unless => :skip_password_validation
-
+  validates :team_id, presence: true
 
   def admin?
     self.assignments.each do |a|

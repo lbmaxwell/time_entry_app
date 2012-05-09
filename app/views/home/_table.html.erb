@@ -1,0 +1,37 @@
+<table border="1">
+  <tr>
+    <th>Minutes</th>
+    <th>Number processed</th>
+    <th>Effective date</th>
+    <th>Task</th>
+    <th>User</th>
+    <th>Most Recent Comment</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% total_minutes = 0 %>
+<% number_processed_total = 0 %>
+<% @time_entries.each do |time_entry| %>
+  <% total_minutes += time_entry.minutes %> 
+  <% number_processed_total += time_entry.number_processed unless time_entry.number_processed.nil? %>
+  <tr>
+    <td><%= time_entry.minutes %></td>
+    <td><%= time_entry.number_processed %></td>
+    <td><%= time_entry.effective_date %></td>
+    <td><%= time_entry.task.name %></td>
+    <td><%= time_entry.user.username %></td>
+    <td><%= time_entry.comments.last.comment unless time_entry.comments.empty? %></td>
+    <td><%= link_to 'View', time_entry_path(time_entry)  %></td>
+    <td><%= link_to 'Comment', { controller: "comments", action: "new", time_entry: time_entry } %></td>
+    <td><%= link_to 'Edit', edit_time_entry_path(time_entry) %></td>
+    <td><%= link_to 'Delete', time_entry, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+<tr>
+  <td><b><%= total_minutes.round(2) %></b></td>
+  <td><b><%= number_processed_total %></b></td>
+  <td><-- Totals</td>
+</tr>
+</table>

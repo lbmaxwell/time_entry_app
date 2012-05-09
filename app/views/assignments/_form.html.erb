@@ -16,8 +16,12 @@
     <%= f.date_select :start_date, start_year: Time.now.year %>
   </div>
   <div class="field">
+    <%= label_tag :no_end_date? %>
+    <%= check_box_tag :no_end_date, nil, true %>
+  </div>  
+  <div class="field">
     <%= f.label :end_date %><br />
-    <%= f.date_select :end_date, end_year: Time.now.year + 25 %>
+    <%= f.date_select :end_date, end_year: Time.now.year + 25, disabled: true %>
   </div>
   <div class="field">
     <%= f.label :user %><br />

@@ -15,14 +15,7 @@
     <%= f.label :comment %><br />
     <%= f.text_field :comment %>
   </div>
-  <div class="field">
-    <%= f.label :time_entry %><br />
-    <%= f.text_field :time_entry %>
-  </div>
-  <div class="field">
-    <%= f.label :user %><br />
-    <%= f.text_field :user %>
-  </div>
+  <%= hidden_field_tag :time_entry_id, @time_entry_id %>
   <div class="actions">
     <%= f.submit %>
   </div>
