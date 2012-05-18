@@ -5,7 +5,9 @@ class ApplicationController < ActionController::Base
   check_authorization #cancan
 
   rescue_from CanCan::AccessDenied do |exception|
-    redirect_to home_path, notice: exception.message
+  #flash.now[:notice] = exception.message
+  #redirect_to :back
+  redirect_to :home, notice: exception.message
   end
 
   private

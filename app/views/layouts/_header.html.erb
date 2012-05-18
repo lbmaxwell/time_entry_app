@@ -6,6 +6,6 @@
       <%= render 'layouts/nav-links' %>
     </div>
     <div id="menucontainer">
-      <%= render 'layouts/menu' %>
+      <%= render 'layouts/menu' unless current_user.nil? || current_user.team.nil? %>
     </div>
 </header>

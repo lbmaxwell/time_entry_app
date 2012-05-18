@@ -1,0 +1,22 @@
+<% if flash[:notice] %>
+    <p class="notice"><%= flash[:notice] %></p>
+  <% end %>
+  <% if flash[:error] %>
+    <p class="error"><%= flash[:error] %></p>
+<% end %>
+<%= form_tag("/paid_time_entries/", :method => "get", :action => "index") do %>
+  <div class-"field">
+    <%= label_tag :team %>
+    <%= select_tag :team, options_from_collection_for_select(@teams, :id, :name) %>
+  </div>
+  <div class-"field">
+  <%= label_tag :start_date %>
+  <%= select_date @begin, :prefix => :start_date %><br />
+  </div>
+  <div class-"field">
+  <%= label_tag :end_date %>
+  <%= select_date @end, :prefix => :end_date %><br />
+  </div>
+  <%= submit_tag "Filter" %>
+<% end %>
+

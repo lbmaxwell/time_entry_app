@@ -21,6 +21,10 @@
     <%= f.check_box :is_active, checked: true %>
   </div>
   <div class="field">
+    <%= f.label :include_in_op_report %><br />
+    <%= f.check_box :include_in_op_report, checked: true %>
+  </div>
+  <div class="field">
     <%= f.label :task_inventory %><br />
     <%= f.collection_select :task_inventory_id, @task_inventories, :id, :name, prompt: true %>
   </div>

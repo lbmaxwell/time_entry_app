@@ -13,3 +13,6 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+
+# We don't want the database.yml on github due to server/username/password info.
+/config/database.yml

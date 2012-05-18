@@ -10,9 +10,10 @@ class User < ActiveRecord::Base
   has_many :paid_time_entries
   belongs_to :team
 
-  validates :password, length: { within: 6..40 }, :unless => :skip_password_validation
+  validates :username, uniqueness: true
+  validates :password, length: { within: 6..20 }, :unless => :skip_password_validation
   validates :password_confirmation, presence: true, :unless => :skip_password_validation
-  validates :team_id, presence: true
+#  validates :team_id, presence: true #Removed when implementing assignment expiration features
 
   def admin?
     self.assignments.each do |a|
@@ -24,7 +25,7 @@ class User < ActiveRecord::Base
   def teams
     teams = Array.new
     self.assignments.each do |a|
-      teams.push(a.team)
+      teams.push(a.team) if a.end_date.nil? || a.end_date >= Date.today
     end
     teams
   end
@@ -33,10 +34,15 @@ class User < ActiveRecord::Base
     teams_managed = Array.new
     self.assignments.each do |a|
       if a.role.name == 'manager'
-        teams_managed.push(a.team)
+        teams_managed.push(a.team) if a.end_date.nil? || a.end_date >= Date.today
       end
     end
     teams_managed
+  end
+
+  def active_assignments
+    a = Assignment.where(user_id: self.id, 
+        end_date: [nil,Date.today..1000.years.from_now.to_date])
   end
 
   private

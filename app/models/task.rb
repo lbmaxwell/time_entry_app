@@ -2,7 +2,8 @@ class Task < ActiveRecord::Base
   belongs_to :task_inventory
   belongs_to :team
   has_many :time_entries
-  attr_accessible :is_active, :expectation_in_seconds, :task_inventory_id, :team_id
+  attr_accessible :is_active, :expectation_in_seconds, :task_inventory_id, 
+      :team_id, :include_in_op_report
   
   #validates :is_active, presence:true
   validates :expectation_in_seconds, presence:true

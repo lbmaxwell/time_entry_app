@@ -7,8 +7,9 @@
 <table>
   <tr>
     <th>Reasonable expectation (minutes)</th>
-    <th>Is active</th>
-    <th>Task inventory</th>
+    <th>Is active?</th>
+    <th>Include in Operating Report?</th>
+    <th>Task name</th>
     <th>Team</th>
     <th></th>
     <th></th>
@@ -19,6 +20,7 @@
   <tr>
     <td><%= task.reasonable_expectation %></td>
     <td><%= task.is_active %></td>
+    <td><%= task.include_in_op_report %></td>
     <td><%= task.task_inventory.name %></td>
     <td><%= task.team.name %></td>
     <td><% link_to 'Show', task %></td>

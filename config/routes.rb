@@ -1,6 +1,6 @@
 TimeEntryApp::Application.routes.draw do
   match '/home', to: 'home#index'
-  match '/admin', to: 'static_pages#admin'
+  match '/admin', to: 'admin#index'
   match '/operating_report', to: 'operating_report#index'#, via: :get
   match '/change_team', to: 'users#change_team'
 
@@ -9,6 +9,8 @@ TimeEntryApp::Application.routes.draw do
 
   match '/signin', to: 'sessions#new'
   match '/signout', to: 'sessions#destroy', via: :delete
+
+#  resources :admin
 
   resources :paid_time_entries
 

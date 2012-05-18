@@ -7,10 +7,19 @@ class SessionsController < ApplicationController
   end
 
   def create
-    user = User.find_by_username(params[:session][:username])
+    user = User.find_by_username(params[:session][:username].downcase)
     if user && user.authenticate(params[:session][:password])
-      sign_in user
-      redirect_to home_path
+      if user.active_assignments.empty?
+        flash.now[:error] = 'Unable to complete login, because this user account has no active assignments.'
+        render 'new'
+      elsif user.team.nil?
+        sign_in user
+        flash[:error] = 'You will not be able to perform any actions until you select a default team.'
+        redirect_to '/change_team'
+      else
+        sign_in user
+        redirect_to home_path
+      end
     else
       flash.now[:error] = 'Invalid username/password combination'
       render 'new'

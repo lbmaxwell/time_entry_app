@@ -1,9 +1,33 @@
 class PaidTimeEntriesController < ApplicationController
   authorize_resource
+  include PaidTimeEntriesHelper
   # GET /paid_time_entries
   # GET /paid_time_entries.json
   def index
-    @paid_time_entries = PaidTimeEntry.all
+    if current_user.admin?
+      @teams = current_user.teams_managed
+      @selected_team = params[:team] ||= current_user.teams_managed.first
+    else
+      @teams = current_user.teams
+    end
+
+    if params[:start_date].nil?
+      @begin = (Date.today - 7)
+    else
+      @begin = input_params_to_date(params[:start_date])
+    end
+
+    if params[:end_date].nil?
+      @end = Date.today
+    else
+      @end = input_params_to_date(params[:end_date])
+    end
+
+    if current_user.admin?
+      @paid_time_entries = PaidTimeEntry.where(effective_date: @begin..@end, team_id: @selected_team)
+    else
+      @paid_time_entries = PaidTimeEntry.where(effective_date: @begin..@end, user_id: current_user.id)
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -37,6 +61,7 @@ class PaidTimeEntriesController < ApplicationController
   # GET /paid_time_entries/1/edit
   def edit
     @paid_time_entry = PaidTimeEntry.find(params[:id])
+    @teams = @paid_time_entry.user.teams
   end
 
   # POST /paid_time_entries

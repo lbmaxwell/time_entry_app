@@ -51,7 +51,9 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
+    params[:user][:username] = params[:user][:username].to_s.downcase
     @user = User.new(params[:user])
+    @teams = Team.all
     
     respond_to do |format|
       if @user.save

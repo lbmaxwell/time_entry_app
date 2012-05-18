@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120503203631) do
+ActiveRecord::Schema.define(:version => 20120518151747) do
 
   create_table "assignments", :force => true do |t|
     t.date     "start_date"
@@ -71,6 +71,7 @@ ActiveRecord::Schema.define(:version => 20120503203631) do
     t.datetime "created_at",             :null => false
     t.datetime "updated_at",             :null => false
     t.integer  "expectation_in_seconds"
+    t.boolean  "include_in_op_report"
   end
 
   add_index "tasks", ["task_inventory_id"], :name => "index_tasks_on_task_inventory_id"

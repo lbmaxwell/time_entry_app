@@ -42,9 +42,9 @@ class AssignmentsController < ApplicationController
   # GET /assignments/1/edit
   def edit
     @assignment = Assignment.find(params[:id])
-    @users = User.all
-    @roles = Role.all
-    @teams = Team.all
+    @user = [@assignment.user]
+    @role = [@assignment.role]
+    @team = [@assignment.team]
 end
 
   # POST /assignments

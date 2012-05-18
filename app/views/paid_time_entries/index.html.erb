@@ -1,11 +1,14 @@
-<h1>Listing paid_time_entries</h1>
+<%= render 'form_for_index' %>
+
+<h1>Paid Time Entries</h1>
 
 <table>
   <tr>
-    <th>Time</th>
     <th>Effective date</th>
     <th>User</th>
     <th>Team</th>
+    <th>Hours</th>
+    <th>Overtime?</th>
     <th></th>
     <th></th>
     <th></th>
@@ -14,8 +17,10 @@
 <% @paid_time_entries.each do |paid_time_entry| %>
   <tr>
     <td><%= paid_time_entry.effective_date %></td>
-    <td><%= paid_time_entry.user %></td>
-    <td><%= paid_time_entry.team %></td>
+    <td><%= paid_time_entry.user.username %></td>
+    <td><%= paid_time_entry.team.name %></td>
+    <td><%= paid_time_entry.hours %>
+    <td><%= paid_time_entry.is_overtime %>
     <td><%= link_to 'Show', paid_time_entry %></td>
     <td><%= link_to 'Edit', edit_paid_time_entry_path(paid_time_entry) %></td>
     <td><%= link_to 'Destroy', paid_time_entry, confirm: 'Are you sure?', method: :delete %></td>

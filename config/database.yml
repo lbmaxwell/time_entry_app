@@ -19,7 +19,11 @@ test:
   timeout: 5000
 
 production:
-  adapter: sqlite3
-  database: db/production.sqlite3
+  host: 192.168.0.243
+  adapter: postgresql
+  encoding: utf-8
+  database: tally
   pool: 5
+  username: tally_app
+  password: a&f32A$Rfd
   timeout: 5000

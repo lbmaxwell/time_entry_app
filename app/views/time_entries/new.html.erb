@@ -1,4 +1,3 @@
-<div id="ajaxtest"></div>
 <h1>New Time Entry</h1>
 <table>
   <tr>
@@ -48,7 +47,7 @@
 
 <%= render 'form' %>
 
-<%= link_to 'Back to all time entries', time_entries_path %>
+<%= link_to 'Back to all time entries', time_entries_path if current_user.admin? %>
 <br />
 <br />
 <br />

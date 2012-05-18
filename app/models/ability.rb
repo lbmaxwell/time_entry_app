@@ -5,24 +5,41 @@ class Ability
 
     if user.admin?
       can :manage, :all
-      cannot :destroy, :all
+      cannot :destroy, User
+      cannot :destroy, Assignment
+#      cannot :edit, Assignment
+#      cannot :update, Assignment
+      cannot :destroy, Task
+      cannot :destroy, TaskInventory
+      cannot :destroy, Team
     else
-      can :new, Comment
-      can :create, Comment
-      can :edit, Comment
-      can :update, Comment
-      can :destroy, Comment
-      can :new, TimeEntry
-      can :create, TimeEntry
-      can :edit, TimeEntry
-      can :update, TimeEntry
-      can :destroy, TimeEntry
-      can :show, TimeEntry
-      can :is_task_direct, TimeEntry
-      can :home, StaticPagesController #useless, b/c skip_auth_check in controller
-      can :edit, User, user_id: user.id
-      can :update, User, user_id: user.id
-      can :change_team, User, user_id: user.id
+      if user.team.nil?
+        can :change_team, User, user_id: user.id
+        can :update, User, user_id: user.id
+      else
+        can :new, Comment
+        can :create, Comment
+        can :edit, Comment, user_id: user.id
+        can :update, Comment, user_id: user.id
+        can :destroy, Comment, user_id: user.id
+        can :new, TimeEntry
+        can :create, TimeEntry
+        can :edit, TimeEntry, user_id: user.id, effective_date: Date.today..(Date.today + 8)
+        can :update, TimeEntry, user_id: user.id, effective_date: Date.today..(Date.today + 8)
+        can :destroy, TimeEntry, user_id: user.id
+        can :show, TimeEntry, user_id: user.id
+        can :is_task_direct, TimeEntry
+        can :new, PaidTimeEntry
+        can :create, PaidTimeEntry
+        can :edit, PaidTimeEntry, user_id: user.id, effective_date: Date.today..(Date.today + 8)
+        can :update, PaidTimeEntry, user_id: user.id, effective_date: Date.today..(Date.today + 8)
+        can :destroy, PaidTimeEntry, user_id: user.id
+        can :show, PaidTimeEntry, user_id: user.id
+        can :index, PaidTimeEntry
+        can :edit, User, user_id: user.id
+        can :update, User, user_id: user.id
+        can :change_team, User, user_id: user.id
+      end
     end
     # Define abilities for the passed in user here. For example:
     #

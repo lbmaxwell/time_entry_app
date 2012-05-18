@@ -1,11 +1,26 @@
 class TimeEntriesController < ApplicationController
   include TimeEntriesHelper
-  authorize_resource
+  load_and_authorize_resource
   #skip_authorization_check
   # GET /time_entries
   # GET /time_entries.json
   def index
-    @time_entries = TimeEntry.all
+    @teams = current_user.teams_managed
+    @selected_team = params[:team] ||= current_user.teams_managed.first
+
+    if params[:start_date].nil?
+      @begin = (Date.today - 7)
+    else
+      @begin = input_params_to_date(params[:start_date])
+    end
+
+    if params[:end_date].nil?
+      @end = Date.today
+    else
+      @end = input_params_to_date(params[:end_date])
+    end
+
+    @time_entries = TimeEntry.where(effective_date: @begin..@end, team_id: @selected_team)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -28,10 +43,12 @@ class TimeEntriesController < ApplicationController
   # GET /time_entries/new
   # GET /time_entries/new.json
   def new
+    @hide_number_processed = true
+    @hide_time_value_fields = true
     @last_time_entry = current_user.time_entries.last
     @time_entry = TimeEntry.new
-    @tasks = current_user.team.tasks.where(is_active: true)
 #    @users = User.all
+    @tasks = current_user.team.tasks.where(is_active: true)
 
     respond_to do |format|
       format.html # new.html.erb
@@ -42,7 +59,10 @@ class TimeEntriesController < ApplicationController
   # GET /time_entries/1/edit
   def edit
     @time_entry = TimeEntry.find(params[:id])
-    @tasks = Task.all
+    @hide_number_processed = !@time_entry.task.is_direct? 
+    @hide_time_value_fields = @time_entry.task.is_direct? 
+    
+    @tasks = current_user.team.tasks.where(is_active: true)
   end
 
   # POST /time_entries
@@ -75,6 +95,11 @@ class TimeEntriesController < ApplicationController
   # PUT /time_entries/1
   # PUT /time_entries/1.json
   def update
+    seconds = params[:time_entry][:seconds].to_i
+    minutes = params[:minutes].to_i
+    seconds += (minutes * 60)
+    params[:time_entry][:seconds] = seconds
+
     @time_entry = TimeEntry.find(params[:id])
 
     respond_to do |format|

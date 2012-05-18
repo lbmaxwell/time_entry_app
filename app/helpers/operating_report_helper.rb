@@ -229,9 +229,9 @@ module OperatingReportHelper
 
   def tasks_for_operating_report
     if current_user.admin?
-      tasks = Team.find(params[:team] ||= current_user.teams_managed.first).tasks.where(is_active: true)
+      tasks = Team.find(params[:team] ||= current_user.teams_managed.first).tasks.where(include_in_op_report: true)
     else
-      tasks = Team.find(params[:team] ||= current_user.team).tasks.where(is_active: true)
+      tasks = Team.find(params[:team] ||= current_user.team).tasks.where(include_in_op_report: true)
     end
     #Line below reorders task array to put indirect tasks first
     tasks.partition{|task| !task.is_direct?}.flatten
