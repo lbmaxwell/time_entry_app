@@ -7,7 +7,13 @@ gem 'cancan', '1.6.7'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
+group :development, :test do
+  gem 'sqlite3'
+end
+
+group :production do
+  gem 'pg'
+end
 
 
 # Gems used only for assets and not required
@@ -35,6 +41,6 @@ gem 'jquery-rails'
 
 # Deploy with Capistrano
 gem 'capistrano'
-
+gem 'rvm-capistrano'
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
