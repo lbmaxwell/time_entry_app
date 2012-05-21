@@ -144,51 +144,6 @@ module OperatingReportHelper
     return table_data
   end
 
-#  def table_data_weekly
-#    table_data = Hash.new
-#    tasks = tasks_for_operating_report
-#    time_entries_local = time_entries
-#    end_dates = last_days_of_week_for_date_range(start_date, end_date)
-#    total_volume = Hash.new(0)
-#    total_time = Hash.new(0)
-#
-#    #(start_date..end_date).each do |date|
-#    end_dates.each do |date|
-#      task_amount = Hash.new(0)
-#
-#      tasks.each do |task|
-#
-#        current_task_id = task.id
-#        seconds = 0
-#        count = 0
-#
-#        time_entries_local.each do |time_entry|
-#          if (time_entry.task == task && 
-#               last_day_in_week(time_entry.effective_date) == date)
-#            if task.is_direct?
-#              count += time_entry.number_processed
-#              seconds += time_entry.seconds * time_entry.number_processed
-#            else
-#              seconds += time_entry.seconds
-#            end
-#          end
-#        end # |time_entry|
-#
-#        if task.is_direct?
-#          task_amount[task.id] = count
-#          total_volume[task.id] += count
-#        else
-#          task_amount[task.id] = (seconds.to_f / 60).round(2)
-#        end
-#        total_time[task.id] += seconds
-#      end # |task|
-#      table_data[last_day_in_week(date)] = task_amount
-#    end # |date|
-#    table_data[:total_volume] = total_volume
-#    table_data[:total_time] = total_time
-#    return table_data
-#  end
-
   def time_entries
     if current_user.admin?
       if params[:users].nil? || params[:users].first == ''
@@ -204,11 +159,11 @@ module OperatingReportHelper
     end
   end
 
-  def users_string
+  def selected_users_string
     return current_user.username unless current_user.admin?
     users_string = ''
     if params[:users].nil? || params[:users].first == ''
-      Team.find(params[:team]).users.each do |user| 
+      team_members(Team.find(params[:team])).each do |user| 
         users_string += "#{user.username}, "
       end
     else
@@ -217,6 +172,15 @@ module OperatingReportHelper
       end
     end 
     users_string.chop!.chop!
+  end
+
+  def team_members(team_param)
+    users = []
+
+    team_param.assignments.each do |assignment|
+      users.push(assignment.user)
+    end
+    users.uniq!
   end
 
   def last_days_of_week_for_date_range(first_day, last_day)

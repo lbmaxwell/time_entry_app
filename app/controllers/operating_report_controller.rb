@@ -6,7 +6,8 @@ class OperatingReportController < ApplicationController
     if current_user.admin?
       @teams = current_user.teams_managed
       @team = Team.find(params[:team] ||= current_user.teams_managed.first)
-      @users = @team.users
+
+      @users = team_members(@team)
     else
       @teams = current_user.teams
       @team = Team.find(params[:team] ||= current_user.team)
@@ -40,7 +41,7 @@ class OperatingReportController < ApplicationController
 
     def users_for_team #Used for AJAX to populate users control based on team selection
       @selected_team_id = params[:team_id] ||= current_user.team_id
-      @users = Team.find(@selected_team_id).users
+      @users = team_members(Team.find(@selected_team_id))
 
       respond_to do |format|
         format.js
