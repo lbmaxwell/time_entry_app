@@ -53,7 +53,7 @@ class UsersController < ApplicationController
   def create
     params[:user][:username] = params[:user][:username].to_s.downcase
     @user = User.new(params[:user])
-    @teams = Team.all
+    @teams = @user.teams
     
     respond_to do |format|
       if @user.save
