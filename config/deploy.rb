@@ -23,6 +23,8 @@ set :branch, 'master' #Added per http://help.github.com/deploy-with-capistrano/
 
 role :web, "192.168.0.244"                          # Your HTTP server, Apache/etc
 role :app, "192.168.0.244"                          # This may be the same as your `Web` server
+#Note: "db role" (below) is only where migrations will be run. It is not the actual db server.
+#The db server configuration options and setup settings are in config/database.yml.
 role :db,  "192.168.0.244", primary: true # This is where Rails migrations will run
 #role :db,  "your slave db-server here"
 
