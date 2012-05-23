@@ -14,5 +14,8 @@
 /log/*.log
 /tmp
 
+# Ignore all swap files
+*.swp
+
 # We don't want the database.yml on github due to server/username/password info.
 #/config/database.yml
