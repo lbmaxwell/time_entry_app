@@ -5,7 +5,7 @@ set :application, "time_entry_app"
 
 #All of the lines in the next block added per Rails Casts Episode 133
 set :user, 'tallyapp'
-set :password, '-ufr9+1ef2b='
+#set :password, '-ufr9+1ef2b='
 set :deploy_to, "/home/#{user}/#{application}"
 set :deploy_via, :remote_cache
 set :use_sudo, false
@@ -13,6 +13,11 @@ default_run_options[:pty] = true
 ssh_options[:forward_agent] = true
 
 after "deploy", "deploy:cleanup" # keep only the last 5 releases on the server
+
+task :precompile_assets do
+  #Code below assumes prod server has environment variable of $RAILS_ENV="production"
+  run "cd /home/tallyapp/time_entry_app/current; rake assets:precompile"
+end
 
 #set :scm, :subversion
 set :scm, :git
@@ -44,6 +49,7 @@ set :bundle_roles, [:app]
  namespace :deploy do
    task :start do ; end
    task :stop do ; end
+   precompile_assets
    task :restart, :roles => :app, :except => { :no_release => true } do
      #run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
      run "touch #{File.join(current_path,'tmp','restart.txt')}"

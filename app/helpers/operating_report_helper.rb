@@ -162,6 +162,12 @@ module OperatingReportHelper
   def selected_users_string
     return current_user.username unless current_user.admin?
     users_string = ''
+    if params[:team].nil?
+      team = current_user.teams_managed.first
+    else
+      team = Team.find(params[:team])
+    end
+
     if params[:users].nil? || params[:users].first == ''
       team_members(Team.find(params[:team])).each do |user| 
         users_string += "#{user.username}, "
@@ -181,6 +187,7 @@ module OperatingReportHelper
       users.push(assignment.user)
     end
     users.uniq!
+    return users
   end
 
   def last_days_of_week_for_date_range(first_day, last_day)
