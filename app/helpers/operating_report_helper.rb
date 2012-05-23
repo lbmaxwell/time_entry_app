@@ -162,22 +162,26 @@ module OperatingReportHelper
   def selected_users_string
     return current_user.username unless current_user.admin?
     users_string = ''
+
     if params[:team].nil?
       team = current_user.teams_managed.first
     else
       team = Team.find(params[:team])
     end
 
+    usernames_array = []
+
     if params[:users].nil? || params[:users].first == ''
-      team_members(Team.find(params[:team])).each do |user| 
-        users_string += "#{user.username}, "
+      team_members(team).each do |user| 
+        usernames_array.push(user.username)
       end
     else
       User.where(id: params[:users]).each do |user|
-        users_string += "#{user.username}, "
+        usernames_array.push(user.username)
       end
     end 
-    users_string.chop!.chop!
+    usernames_array.sort! { |a,b| a <=> b }
+    usernames_array.join(", ")
   end
 
   def team_members(team_param)

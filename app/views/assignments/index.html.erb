@@ -1,4 +1,4 @@
-<h1>Listing assignments for</h1>
+<h1>Listing assignments for <%= @user.username %></h1>
 <%= form_tag("/assignments", :method => "get", :action => "index") do %>
   <%= label_tag :user %>
   <%= select_tag "user", options_from_collection_for_select(@users, "id", "username"), prompt: "Select a user..." %>

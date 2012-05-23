@@ -4,6 +4,7 @@ class TeamsController < ApplicationController
   # GET /teams.json
   def index
     @teams = Team.all
+    @teams.sort! { |a,b| a.name <=> b.name }
 
     respond_to do |format|
       format.html # index.html.erb

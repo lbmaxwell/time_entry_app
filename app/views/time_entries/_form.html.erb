@@ -30,6 +30,10 @@
     <%= f.label :effective_date %><br />
     <%= f.date_select :effective_date %>
   </div>
+  <div class="field">
+    <%= label_tag :comment %> (optional, except for "Other" tasks)<br />
+    <%= text_field_tag :comment %>
+  </div>
   <div class="actions">
     <%= f.submit %>
   </div>

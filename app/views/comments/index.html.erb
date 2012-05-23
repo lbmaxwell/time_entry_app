@@ -3,7 +3,7 @@
 <table>
   <tr>
     <th>Comment</th>
-    <th>Time entry</th>
+    <th>Task entry</th>
     <th>User</th>
     <th></th>
     <th></th>
@@ -13,8 +13,8 @@
 <% @comments.each do |comment| %>
   <tr>
     <td><%= comment.comment %></td>
-    <td><%= comment.time_entry %></td>
-    <td><%= comment.user %></td>
+    <td><%= link_to "Task Entry", comment.time_entry %></td>
+    <td><%= comment.user.username %></td>
     <td><%= link_to 'Show', comment %></td>
     <td><%= link_to 'Edit', edit_comment_path(comment) %></td>
     <td><%= link_to 'Destroy', comment, confirm: 'Are you sure?', method: :delete %></td>

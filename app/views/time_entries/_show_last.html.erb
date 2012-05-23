@@ -27,4 +27,9 @@
   <%= @last_time_entry.user.username %>
 </p>
 
-
+<p>
+  <b>Comments:</b><p>
+  <% @last_time_entry.comments.each do |comment| %>
+    <b><%= "#{comment.user.username}:" %></b><br />
+    <%= comment.comment %><p>
+  <% end %>

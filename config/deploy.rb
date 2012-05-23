@@ -36,8 +36,9 @@ namespace :deploy do
   task :start do ; end
   task :stop do ; end
   task :restart, :roles => :app, :except => { :no_release => true } do
-    #Line below assumes prod server has environment variable of $RAILS_ENV="production"
+    #Lines below assumes prod server has environment variable of $RAILS_ENV="production"
     run "cd #{current_path}; rake assets:precompile"
+    run "cd #{current_path}; rake db:migrate"
 
     #Restart web server - sudo not necessary with current configuration
     #run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"

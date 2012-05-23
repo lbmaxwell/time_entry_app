@@ -49,6 +49,7 @@ class TimeEntriesController < ApplicationController
     @time_entry = TimeEntry.new
 #    @users = User.all
     @tasks = current_user.team.tasks.where(is_active: true)
+    @tasks.sort! { |a,b| a.name.downcase <=> b.name.downcase }
 
     respond_to do |format|
       format.html # new.html.erb
@@ -63,12 +64,20 @@ class TimeEntriesController < ApplicationController
     @hide_time_value_fields = @time_entry.task.is_direct? 
     
     @tasks = current_user.team.tasks.where(is_active: true)
+    @tasks.sort! { |a,b| a.name.downcase <=> b.name.downcase }
   end
 
   # POST /time_entries
   # POST /time_entries.json
   def create
+    @tasks = current_user.team.tasks.where(is_active: true)
     task = Task.find(params[:time_entry][:task_id])
+
+    #Do not allow submission if a comment is not provided for "Other" tasks
+    if task.name.downcase. == 'other' && params[:comment].empty?
+      flash.now[:error] = 'A comment is required for "Other" tasks.'
+      render 'new' and return
+    end
 
     if task.task_inventory.is_direct
       params[:time_entry][:seconds] = task.expectation_in_seconds
@@ -83,6 +92,8 @@ class TimeEntriesController < ApplicationController
 
     respond_to do |format|
       if @time_entry.save
+        Comment.create(comment: params[:comment], time_entry: @time_entry,
+          user: current_user) unless params[:comment].empty?
         format.html { redirect_to new_time_entry_path, notice: 'Time entry was successfully created.' }
         format.json { render json: @time_entry, status: :created, location: @time_entry }
       else

@@ -6,7 +6,15 @@ class AssignmentsController < ApplicationController
   # GET /assignments.json
   def index
     @users = User.all
-    @assignments = Assignment.where(user_id: params[:user])
+    @users.sort! { |a,b| a.username <=> b.username }
+
+    if params[:user].nil?    
+      @user = current_user
+    else
+      @user = User.find(params[:user])
+    end
+
+    @assignments = Assignment.where(user_id: @user).sort{ |a,b| a.start_date <=> b.start_date }
 
     respond_to do |format|
       format.html # index.html.erb
@@ -30,8 +38,10 @@ class AssignmentsController < ApplicationController
   def new
     @assignment = Assignment.new
     @users = User.all
+    @users.sort! { |a,b| a.username <=> b.username }
     @roles = Role.all
     @teams = Team.all
+    @teams.sort! { |a,b| a.name <=> b.name }
 
     respond_to do |format|
       format.html # new.html.erb

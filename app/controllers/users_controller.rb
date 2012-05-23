@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   # GET /users.json
   def index
     @users = User.all
+    @users.sort! { |a,b| a.username <=> b.username }
 
     respond_to do |format|
       format.html # index.html.erb
@@ -38,14 +39,13 @@ class UsersController < ApplicationController
   def edit
     @user = User.find(params[:id])
     @teams = Team.all
+    @teams.sort! { |a,b| a.name <=> b.name }
     @is_username_control_disabled = "true"
   end
 
   def change_team
-    #params[:id] = current_user.id if params[:id].nil?
     @user = User.find(current_user.id)
     @teams = current_user.teams
-    #@user.skip_password_validation = true
   end  
 
   # POST /users

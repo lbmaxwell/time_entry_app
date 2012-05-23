@@ -51,6 +51,7 @@ class PaidTimeEntriesController < ApplicationController
   def new
     @paid_time_entry = PaidTimeEntry.new
     @teams = current_user.teams
+    @teams.sort! { |a,b| a.name <=> b.name }
 
     respond_to do |format|
       format.html # new.html.erb
@@ -62,6 +63,7 @@ class PaidTimeEntriesController < ApplicationController
   def edit
     @paid_time_entry = PaidTimeEntry.find(params[:id])
     @teams = @paid_time_entry.user.teams
+    @teams.sort! { |a,b| a.name <=> b.name }
   end
 
   # POST /paid_time_entries

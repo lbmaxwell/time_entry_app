@@ -4,12 +4,16 @@ class TasksController < ApplicationController
   # GET /tasks.json
   def index    
     @teams = Team.all
+    @teams.sort! { |a,b| a.name <=> b.name }
+
     if params[:team].nil?
       @selected_team_name = "Team not selected"
     else
       @selected_team_name = Team.find(params[:team]).name
     end
+
     @tasks = Task.where(team_id: params[:team])
+    @tasks.sort! { |a,b| a.name <=> b.name }
 
     respond_to do |format|
       format.html # index.html.erb
@@ -44,8 +48,10 @@ class TasksController < ApplicationController
   # GET /tasks/1/edit
   def edit
     @task = Task.find(params[:id])
-    @teams = current_user.teams_managed
-    @task_inventories = TaskInventory.all
+
+    #These attributes should be displayed but not changed
+    @teams = [@task.team] #current_user.teams_managed
+    @task_inventories = [@task.task_inventory]#TaskInventory.all
   end
 
   # POST /tasks
