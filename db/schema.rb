@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120518151747) do
+ActiveRecord::Schema.define(:version => 20120524191029) do
 
   create_table "assignments", :force => true do |t|
     t.date     "start_date"
@@ -104,6 +104,7 @@ ActiveRecord::Schema.define(:version => 20120518151747) do
     t.string   "password_digest"
     t.string   "remember_token"
     t.integer  "team_id"
+    t.datetime "last_request_at"
   end
 
   add_index "users", ["remember_token"], :name => "index_users_on_remember_token"

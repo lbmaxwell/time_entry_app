@@ -1,8 +1,8 @@
 class User < ActiveRecord::Base
   attr_accessible :username, :password, :password_confirmation, :team_id
-  attr_accessor :skip_password_validation 
+  attr_accessor :skip_password_validation, :do_not_reset_session 
   has_secure_password
-  before_save :create_remember_token
+  before_save :create_remember_token, unless: :do_not_reset_session
 
   has_many :assignments
   has_many :comments
