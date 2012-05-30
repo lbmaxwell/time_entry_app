@@ -20,11 +20,15 @@ set :use_sudo, false
 default_run_options[:pty] = true
 ssh_options[:forward_agent] = true
 
+#task :
+
 task :production do
   puts "\n\e[0;31m   ######################################################################" 
   puts "   #\n   #       Are you REALLY sure you want to deploy to production?"
   puts "   #\n   #               Enter y/n + enter to continue\n   #"
-  puts "   ######################################################################\e[0m\n" 
+  puts "   ######################################################################\e[0m\n"
+
+  set :environment, "production"
 
   role :web, "192.168.0.244" # Your HTTP server, Apache/etc
   role :app, "192.168.0.244" # This may be the same as your `Web` server
@@ -37,6 +41,8 @@ end
 task :staging do
   role :web, "192.168.0.241" # Your HTTP server, Apache/etc
   role :app, "192.168.0.241" # This may be the same as your `Web` server
+
+  set :environment, "test"
 
   # "role :db" (below) is only where migrations will be run.
   #The actual database server for the app is completely configured in config/database.yml.
@@ -64,7 +70,7 @@ namespace :deploy do
   task :restart, :roles => :app, :except => { :no_release => true } do
     #Lines below assumes prod server has environment variable of $RAILS_ENV="production"
     run "cd #{current_path}; rake assets:precompile"
-    run "cd #{current_path}; RAILS_ENV=\"production\" rake db:migrate"
+    run "cd #{current_path}; RAILS_ENV=\"#{environment}\" rake db:migrate"
 
     #Restart web server - sudo not necessary with current configuration
     #run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
