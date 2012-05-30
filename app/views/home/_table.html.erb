@@ -18,7 +18,7 @@
   <% total_minutes += time_entry.minutes %> 
   <% number_processed_total += time_entry.number_processed unless time_entry.number_processed.nil? %>
   <tr>
-    <td><%= time_entry.minutes %></td>
+    <td><%= if !time_entry.task.is_direct? then time_entry.minutes else "-" end%></td>
     <td><%= time_entry.number_processed %></td>
     <td><%= time_entry.effective_date %></td>
     <td><%= time_entry.task.name %></td>

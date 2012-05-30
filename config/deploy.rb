@@ -1,3 +1,13 @@
+#To deploy to staging...
+#cap staging deploy:setup
+#cap staging deploy:check
+#cap staging deploy
+
+#To deploy to prod
+#cap production deploy:setup
+#cap production deploy:check
+#cap production deploy
+
 require 'bundler/capistrano'
 require 'rvm/capistrano'
 
@@ -10,12 +20,28 @@ set :use_sudo, false
 default_run_options[:pty] = true
 ssh_options[:forward_agent] = true
 
-role :web, "192.168.0.244" # Your HTTP server, Apache/etc
-role :app, "192.168.0.244" # This may be the same as your `Web` server
+task :production do
+  puts "\n\e[0;31m   ######################################################################" 
+  puts "   #\n   #       Are you REALLY sure you want to deploy to production?"
+  puts "   #\n   #               Enter y/n + enter to continue\n   #"
+  puts "   ######################################################################\e[0m\n" 
 
-# "role :db" (below) is only where migrations will be run.
-#The actual database server for the app is completely configured in config/database.yml.
-role :db,  "192.168.0.244", primary: true # This is where Rails migrations will run
+  role :web, "192.168.0.244" # Your HTTP server, Apache/etc
+  role :app, "192.168.0.244" # This may be the same as your `Web` server
+
+  # "role :db" (below) is only where migrations will be run.
+  #The actual database server for the app is completely configured in config/database.yml.
+  role :db,  "192.168.0.244", primary: true # This is where Rails migrations will run
+end
+
+task :staging do
+  role :web, "192.168.0.241" # Your HTTP server, Apache/etc
+  role :app, "192.168.0.241" # This may be the same as your `Web` server
+
+  # "role :db" (below) is only where migrations will be run.
+  #The actual database server for the app is completely configured in config/database.yml.
+  role :db,  "192.168.0.241", primary: true # This is where Rails migrations will run
+end
 
 #SCM options
 set :scm, :git

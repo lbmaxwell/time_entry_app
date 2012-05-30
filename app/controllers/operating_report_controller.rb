@@ -3,6 +3,8 @@ class OperatingReportController < ApplicationController
   skip_authorization_check
 
   def index
+    @show_performance = true
+
     if current_user.admin?
       @teams = current_user.teams_managed
       @team = Team.find(params[:team] ||= current_user.teams_managed.first)
@@ -12,6 +14,7 @@ class OperatingReportController < ApplicationController
     else
       @teams = current_user.teams
       @team = Team.find(params[:team] ||= current_user.team)
+      @show_performance = @team.show_performance
       @users = [current_user]
     end
 

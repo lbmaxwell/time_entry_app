@@ -47,7 +47,13 @@ class TimeEntriesController < ApplicationController
     @hide_time_value_fields = true
     @last_time_entry = current_user.time_entries.last
     @time_entry = TimeEntry.new
-#    @users = User.all
+
+    if current_user.admin?
+      @users = User.all.sort! { |a,b| a.username.downcase <=> b.username.downcase }
+    else
+      @users = [current_user]
+    end
+
     @tasks = current_user.team.tasks.where(is_active: true)
     @tasks.sort! { |a,b| a.name.downcase <=> b.name.downcase }
 
@@ -74,7 +80,7 @@ class TimeEntriesController < ApplicationController
     task = Task.find(params[:time_entry][:task_id])
 
     #Do not allow submission if a comment is not provided for "Other" tasks
-    if task.name.downcase. == 'other' && params[:comment].empty?
+    if task.name.downcase == 'other' && params[:comment].empty?
       flash.now[:error] = 'A comment is required for "Other" tasks.'
       render 'new' and return
     end

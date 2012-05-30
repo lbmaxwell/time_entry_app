@@ -15,6 +15,10 @@
     <%= f.label :name %><br />
     <%= f.text_field :name %>
   </div>
+  <div class="field">
+    <%= f.label :show_performance, 'Show performance stats to non-admins (individually, not aggregate)?' %><br />
+    <%= f.check_box :show_performance, is_checked: true %>
+  </div>
   <div class="actions">
     <%= f.submit %>
   </div>

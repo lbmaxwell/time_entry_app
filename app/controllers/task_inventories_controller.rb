@@ -3,7 +3,7 @@ class TaskInventoriesController < ApplicationController
   # GET /task_inventories
   # GET /task_inventories.json
   def index
-    @task_inventories = TaskInventory.all
+    @task_inventories = TaskInventory.all.sort! { |a,b| a.name.downcase <=> b.name.downcase }
 
     respond_to do |format|
       format.html # index.html.erb

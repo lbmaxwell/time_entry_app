@@ -10,7 +10,9 @@
     <td><%= if task.is_direct? then task.reasonable_expectation else '' end %></td>
   <% end %>
   <td>Hours</td>
-  <td colspan="3" align="center">Performance</td>
+  <% if @show_performance %>
+    <td colspan="3" align="center">Performance</td>
+  <% end %>
 </tr>
 <tr>
   <td></td>
@@ -33,9 +35,11 @@
     <th class="<%= css_class %>"><%= task.name %> <%= units %></th>
   <% end %>
   <th><b>Actual Direct Hours</b></th>
-  <th><b>Utilization</b></th>
-  <th><b>Efficiency</b></th>
-  <th><b>Production</b></th>
+  <% if @show_performance %>
+    <th><b>Utilization</b></th>
+    <th><b>Efficiency</b></th>
+    <th><b>Production</b></th>
+  <% end %>
 </tr>
 <% @date_range.each do |date| %>
   <tr>
@@ -46,9 +50,11 @@
       <td><%= @table_data[date][task.id] %></td>
     <% end %>
   <td><b><%= seconds_to_hours(@table_data[date][:actual_direct_seconds]) %></b></td>
-  <td><b><%= @table_data[date][:utilization] %></b></td>
-  <td><b><%= @table_data[date][:efficiency] %></b></td>
-  <td><b><%= @table_data[date][:production] %></b></td>
+  <% if @show_performance %>
+    <td><b><%= @table_data[date][:utilization] %></b></td>
+    <td><b><%= @table_data[date][:efficiency] %></b></td>
+    <td><b><%= @table_data[date][:production] %></b></td>
+  <% end %>  
   </tr>
 <% end %>
 <tr>
@@ -62,10 +68,12 @@
       <td align="center"><b>-</b></td>
     <% end %>
   <% end %>
-  <td>-</td>
-  <td>-</td>
-  <td>-</td>
-  <td>-</td>
+    <td>-</td>
+  <% if @show_performance %>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+  <% end %>
 </tr>
 <tr>
   <td><b>Total Hours:</b></td>
@@ -75,8 +83,10 @@
   <td><b> <%= (@table_data[:total_time][task.id].to_f / (60*60)).round(2) %></b></td>
   <% end %>
   <td><b><%= seconds_to_hours(table_data[:actual_direct_seconds_total]) %></b></td>
-  <td>-</td>
-  <td>-</td>
-  <td>-</td>
+  <% if @show_performance %>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+  <% end %>
 </tr>
 </table>

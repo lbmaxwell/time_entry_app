@@ -1,5 +1,5 @@
 class Team < ActiveRecord::Base
-  attr_accessible :name
+  attr_accessible :name, :show_performance
 
   has_many :assignments
   has_many :tasks
@@ -8,4 +8,5 @@ class Team < ActiveRecord::Base
   has_many :time_entries
 
   validates :name, presence: true
+  validates :show_performance, presence: true
 end

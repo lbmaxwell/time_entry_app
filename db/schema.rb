@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120524191029) do
+ActiveRecord::Schema.define(:version => 20120529194801) do
 
   create_table "assignments", :force => true do |t|
     t.date     "start_date"
@@ -79,8 +79,9 @@ ActiveRecord::Schema.define(:version => 20120524191029) do
 
   create_table "teams", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+    t.boolean  "show_performance"
   end
 
   create_table "time_entries", :force => true do |t|

@@ -12,6 +12,10 @@
   <% end %>
 
   <div class="field">
+    <%= f.label :user if current_user.admin? %>
+    <%= f.collection_select :user_id, @users, :id, :username, selected: current_user.id if current_user.admin? %>
+   </div>    
+   <div class="field">
     <%= f.label :task %>s for <%= current_user.team.name  %>
     <%= link_to "change team", change_team_path, confirm: 'Changing teams will cause your session to end. Continue?' %><br />
     <%= f.collection_select :task_id, @tasks, :id, :name, prompt: true %>

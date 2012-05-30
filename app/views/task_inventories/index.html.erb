@@ -8,7 +8,7 @@
     <th></th>
   </tr>
 
-<% @task_inventories.sort!.each do |task_inventory| %>
+<% @task_inventories.each do |task_inventory| %>
   <tr>
     <td><%= task_inventory.name %></td>
     <td><% link_to 'Show', task_inventory %></td>
