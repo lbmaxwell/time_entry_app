@@ -73,6 +73,7 @@ class PaidTimeEntriesController < ApplicationController
     params[:paid_time_entry][:user_id] = current_user.id
     params[:paid_time_entry][:minutes] = ((params[:hours].to_i * 60) + params[:minutes].to_i)
     @paid_time_entry = PaidTimeEntry.new(params[:paid_time_entry])
+    @paid_time_entry.skip_date_range_check = current_user.admin?
 
     respond_to do |format|
       if @paid_time_entry.save
@@ -89,6 +90,7 @@ class PaidTimeEntriesController < ApplicationController
   # PUT /paid_time_entries/1.json
   def update
     @paid_time_entry = PaidTimeEntry.find(params[:id])
+    @paid_time_entry.skip_date_range_check = current_user.admin?
 
     respond_to do |format|
       if @paid_time_entry.update_attributes(params[:paid_time_entry])

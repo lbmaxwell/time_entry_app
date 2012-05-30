@@ -72,11 +72,12 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @is_username_control_disabled = "true"
     @user.skip_password_validation = true if params[:skip_password_validation]
+    @user.do_not_reset_session = true if params[:do_not_reset_session]
 
 
     respond_to do |format|
       if @user.update_attributes(params[:user])
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
+        format.html { redirect_to home_path, notice: 'User was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

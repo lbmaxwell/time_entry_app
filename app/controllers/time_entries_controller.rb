@@ -77,24 +77,37 @@ class TimeEntriesController < ApplicationController
   # POST /time_entries.json
   def create
     @tasks = current_user.team.tasks.where(is_active: true)
-    task = Task.find(params[:time_entry][:task_id])
 
-    #Do not allow submission if a comment is not provided for "Other" tasks
-    if task.name.downcase == 'other' && params[:comment].empty?
-      flash.now[:error] = 'A comment is required for "Other" tasks.'
-      render 'new' and return
-    end
-
-    if task.task_inventory.is_direct
-      params[:time_entry][:seconds] = task.expectation_in_seconds
+    if current_user.admin?
+      @users = User.all.sort! { |a,b| a.username.downcase <=> b.username.downcase }
     else
-      params[:time_entry][:seconds] = calculate_seconds_from_form
+      @users = [current_user]
     end
 
-    params[:time_entry][:user_id] = current_user.id
+    unless params[:time_entry][:task_id].empty?
+      task = Task.find(params[:time_entry][:task_id])
+
+      #Do not allow submission if a comment is not provided for "Other" tasks
+      if task.name.downcase == 'other' && params[:comment].empty?
+        flash.now[:error] = 'A comment is required for "Other" tasks.'
+        render 'new' and return
+      end
+
+      if task.task_inventory.is_direct
+        params[:time_entry][:seconds] = task.expectation_in_seconds
+      else
+        params[:time_entry][:seconds] = calculate_seconds_from_form
+      end
+    end
+
+    if params[:time_entry][:user_id].nil? || params[:time_entry][:user_id].empty?
+      params[:time_entry][:user_id] = current_user.id
+    end
+
     params[:time_entry][:team_id] = current_user.team.id
     @tasks = current_user.team.tasks
     @time_entry = TimeEntry.new(params[:time_entry])
+    @time_entry.skip_date_range_check = current_user.admin?
 
     respond_to do |format|
       if @time_entry.save
@@ -118,6 +131,7 @@ class TimeEntriesController < ApplicationController
     params[:time_entry][:seconds] = seconds
 
     @time_entry = TimeEntry.find(params[:id])
+    @tasks = @time_entry.team.tasks.where(is_active: true)
 
     respond_to do |format|
       if @time_entry.update_attributes(params[:time_entry])

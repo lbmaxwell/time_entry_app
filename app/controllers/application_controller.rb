@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  before_filter :signed_in_user, :update_user_last_request_at
+  before_filter :signed_in_user, :update_user_last_request_at, :include_username_in_log
   protect_from_forgery
   include SessionsHelper
   check_authorization #cancan
@@ -24,6 +24,12 @@ class ApplicationController < ActionController::Base
       current_user.do_not_reset_session = true
       current_user.last_request_at = DateTime.now
       current_user.save
+    end
+  end
+
+  def include_username_in_log
+    unless current_user.nil?
+      logger.info "Request made by #{current_user.username}."
     end
   end
 end

@@ -12,11 +12,7 @@
     <th></th>
   </tr>
 
-<% total_minutes = 0 %>
-<% number_processed_total = 0 %>
 <% @time_entries.each do |time_entry| %>
-  <% total_minutes += time_entry.minutes %> 
-  <% number_processed_total += time_entry.number_processed unless time_entry.number_processed.nil? %>
   <tr>
     <td><%= if !time_entry.task.is_direct? then time_entry.minutes else "-" end%></td>
     <td><%= time_entry.number_processed %></td>
@@ -31,9 +27,4 @@
     <td><%= link_to 'Delete', time_entry, confirm: 'Are you sure?', method: :delete %></td>
   </tr>
 <% end %>
-<tr>
-  <td><b><%= total_minutes.round(2) %></b></td>
-  <td><b><%= number_processed_total %></b></td>
-  <td><-- Totals</td>
-</tr>
 </table>

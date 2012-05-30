@@ -8,5 +8,5 @@ class Team < ActiveRecord::Base
   has_many :time_entries
 
   validates :name, presence: true
-  validates :show_performance, presence: true
+  validates :show_performance, inclusion: { in: [true, false] }
 end
