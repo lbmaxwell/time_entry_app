@@ -32,6 +32,7 @@ TimeEntryApp::Application.routes.draw do
 
   #Routes for AJAX
   match '/users_for_team', to: 'operating_report#users_for_team'
+  match '/users_for_team_paid_time_entry', to: 'paid_time_entries#users_for_team'
   match '/is_task_direct', to: 'time_entries#is_task_direct'
   match '/is_end_date_disabled', to: 'assignments#is_end_date_disabled'
 

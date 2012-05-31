@@ -1,7 +1,7 @@
 <%= form_for(@paid_time_entry) do |f| %>
   <% if @paid_time_entry.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@paid_time_entry.errors.count, "error") %> prohibited this paid_time_entry from being saved:</h2>
+      <h2><%= pluralize(@paid_time_entry.errors.count, "error") %> prohibited this record from being saved:</h2>
 
       <ul>
       <% @paid_time_entry.errors.full_messages.each do |msg| %>
@@ -11,6 +11,16 @@
     </div>
   <% end %>
 
+  <div class="field">
+    <%= f.label :team %><br />
+    <%= f.collection_select :team_id, @teams, :id, :name, selected: @user.team_id %>
+  </div>  
+  <% if current_user.admin? %>
+    <div class="field">
+      <%= f.label :users %>
+      <%= f.collection_select :user_id, @users, :id, :username %>
+    </div>
+  <% end %>
   <div class="field">
     <%= number_field_tag :hours, 8, min: 0 %>
     <%= f.label :hours %><br />
@@ -25,10 +35,7 @@
     <%= f.label :effective_date %><br />
     <%= f.date_select :effective_date %>
   </div>
-  <div class="field">
-    <%= f.label :team %><br />
-    <%= f.collection_select :team_id, @teams, :id, :name %>
-  </div>
+
   <div class="actions">
     <%= f.submit %>
   </div>

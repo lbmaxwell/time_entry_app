@@ -52,6 +52,16 @@ class PaidTimeEntriesController < ApplicationController
     @paid_time_entry = PaidTimeEntry.new
     @teams = current_user.teams
     @teams.sort! { |a,b| a.name <=> b.name }
+    @team = current_user.team
+    @user = current_user
+
+    if current_user.admin? && current_user.teams_managed.include?(@team)
+      @users = team_members(@team)
+    else
+      @users = [current_user]
+    end
+
+    @users.sort! { |a,b| a.username <=> b.username }
 
     respond_to do |format|
       format.html # new.html.erb
@@ -112,6 +122,28 @@ class PaidTimeEntriesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to paid_time_entries_url }
       format.json { head :no_content }
+    end
+  end
+
+  def users_for_team #Used for AJAX to populate users control based on team selection
+    if params[:team_id].nil? || params[:team_id].empty?
+      @team = current_user.team
+    else
+      @team = Team.find(params[:team_id])
+    end
+
+    if current_user.admin? && current_user.teams_managed.include?(@team)
+      @users = team_members(@team)
+    else
+      @users = [current_user]
+    end
+    #@selected_team_id = params[:team_id] ||= current_user.team_id
+
+    #@users = team_members(Team.find(@selected_team_id))
+    @users.sort! { |a,b| a.username <=> b.username }
+
+    respond_to do |format|
+      format.js
     end
   end
 end

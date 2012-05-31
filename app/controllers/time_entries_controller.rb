@@ -48,12 +48,9 @@ class TimeEntriesController < ApplicationController
     @last_time_entry = current_user.time_entries.last
     @time_entry = TimeEntry.new
 
-    if current_user.admin?
-      @users = User.all.sort! { |a,b| a.username.downcase <=> b.username.downcase }
-    else
-      @users = [current_user]
-    end
-
+    @show_change_team_link = true
+    @team = current_user.team
+    @users = users_for_dropdown
     @tasks = current_user.team.tasks.where(is_active: true)
     @tasks.sort! { |a,b| a.name.downcase <=> b.name.downcase }
 
@@ -67,9 +64,14 @@ class TimeEntriesController < ApplicationController
   def edit
     @time_entry = TimeEntry.find(params[:id])
     @hide_number_processed = !@time_entry.task.is_direct? 
-    @hide_time_value_fields = @time_entry.task.is_direct? 
-    
-    @tasks = current_user.team.tasks.where(is_active: true)
+    @hide_time_value_fields = @time_entry.task.is_direct?
+
+    @show_change_team_link = false
+   
+    @team = @time_entry.team
+    @users = users_for_dropdown
+
+    @tasks = @time_entry.team.tasks#current_user.team.tasks.where(is_active: true)
     @tasks.sort! { |a,b| a.name.downcase <=> b.name.downcase }
   end
 
@@ -78,11 +80,7 @@ class TimeEntriesController < ApplicationController
   def create
     @tasks = current_user.team.tasks.where(is_active: true)
 
-    if current_user.admin?
-      @users = User.all.sort! { |a,b| a.username.downcase <=> b.username.downcase }
-    else
-      @users = [current_user]
-    end
+    @users = users_for_dropdown
 
     unless params[:time_entry][:task_id].empty?
       task = Task.find(params[:time_entry][:task_id])

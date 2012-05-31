@@ -12,6 +12,16 @@ module TimeEntriesHelper
     date += date_hash[:day]
     date = date.to_date
   end
+
+  def users_for_dropdown
+    if current_user.admin? && current_user.teams_managed.include?(current_user.team)
+      @users = current_user.team.users.sort! do |a,b|
+        a.username.downcase <=> b.username.downcase
+      end
+    else
+      @users = [current_user]
+    end
+  end
 #  def start_date
 #    if params[:start_date].nil?
 #      start_date = Date.today #first_day_in_week
