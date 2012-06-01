@@ -82,7 +82,7 @@
   <% @tasks.each do |task| %>
   <td><b> <%= (@table_data[:total_time][task.id].to_f / (60*60)).round(2) %></b></td>
   <% end %>
-  <td><b><%= seconds_to_hours(table_data[:actual_direct_seconds_total]) %></b></td>
+  <td><b><%= seconds_to_hours(@table_data[:actual_direct_seconds_total]) %></b></td>
   <% if @show_performance %>
     <td>-</td>
     <td>-</td>
