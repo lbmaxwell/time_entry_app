@@ -2,6 +2,7 @@ TimeEntryApp::Application.routes.draw do
   match '/home', to: 'home#index'
   match '/admin', to: 'admin#index'
   match '/operating_report', to: 'operating_report#index'#, via: :get
+  match '/performance_board', to: 'performance_board#index'#, via: :get
   match '/change_team', to: 'users#change_team'
 
   root to: 'home#index'
@@ -32,6 +33,7 @@ TimeEntryApp::Application.routes.draw do
 
   #Routes for AJAX
   match '/users_for_team', to: 'operating_report#users_for_team'
+  match '/users_for_team_performance_board', to: 'performance_board#users_for_team'
   match '/users_for_team_paid_time_entry', to: 'paid_time_entries#users_for_team'
   match '/is_task_direct', to: 'time_entries#is_task_direct'
   match '/is_end_date_disabled', to: 'assignments#is_end_date_disabled'

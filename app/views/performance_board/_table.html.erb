@@ -1,0 +1,25 @@
+<h2> Performance Board for <%= @date %><h2>
+<h3>Team: <%= @team.name  %></h3>
+<h3>Users: <%= selected_users_string %></h3>
+<table class="operating_report_table">
+  <tr>
+    <td>Reasonable Expectation*</td>
+    <% @tasks.each do |task| %>
+      <td><%= task.reasonable_expectation %></td>
+    <% end %>
+  </tr>
+  <tr>
+    <td></td>
+    <% @tasks.each do |task| %>
+      <td><%= task.name %></td>
+    <% end %>
+  </tr>
+  <% @table_data.each do |hour, count_hash| %>
+    <tr>
+      <td><%= hour_int_to_time_string(hour) %></td>
+      <% @tasks.each do |task|  %>
+      <td><%= count_hash[task.id] %></td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>

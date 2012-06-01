@@ -79,20 +79,21 @@ class TimeEntriesController < ApplicationController
   # POST /time_entries.json
   def create
     @tasks = current_user.team.tasks.where(is_active: true)
+    @team = current_user.team
 
     @users = users_for_dropdown
 
     unless params[:time_entry][:task_id].empty?
-      task = Task.find(params[:time_entry][:task_id])
+      @task = Task.find(params[:time_entry][:task_id])
 
       #Do not allow submission if a comment is not provided for "Other" tasks
-      if task.name.downcase == 'other' && params[:comment].empty?
+      if @task.name.downcase == 'other' && params[:comment].empty?
         flash.now[:error] = 'A comment is required for "Other" tasks.'
         render 'new' and return
       end
 
-      if task.task_inventory.is_direct
-        params[:time_entry][:seconds] = task.expectation_in_seconds
+      if @task.task_inventory.is_direct
+        params[:time_entry][:seconds] = @task.expectation_in_seconds
       else
         params[:time_entry][:seconds] = calculate_seconds_from_form
       end
@@ -106,6 +107,7 @@ class TimeEntriesController < ApplicationController
     @tasks = current_user.team.tasks
     @time_entry = TimeEntry.new(params[:time_entry])
     @time_entry.skip_date_range_check = current_user.admin?
+    @time_entry.allow_nil_for_number_processed = @task.nil? || !@task.is_direct?
 
     respond_to do |format|
       if @time_entry.save
@@ -128,8 +130,12 @@ class TimeEntriesController < ApplicationController
     seconds += (minutes * 60)
     params[:time_entry][:seconds] = seconds
 
+    @users = users_for_dropdown
     @time_entry = TimeEntry.find(params[:id])
+    @team = @time_entry.team
+    @task = Task.find(params[:time_entry][:task_id])
     @tasks = @time_entry.team.tasks.where(is_active: true)
+    @time_entry.allow_nil_for_number_processed = !@task.is_direct?
 
     respond_to do |format|
       if @time_entry.update_attributes(params[:time_entry])
