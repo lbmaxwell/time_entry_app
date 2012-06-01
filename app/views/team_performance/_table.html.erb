@@ -1,0 +1,92 @@
+<h2><%= @report_type %> Operating Report for <%= start_date %> to <%= end_date %><h2>
+<h3>Team: <%= @team.name  %></h3>
+<h3>Users: <%= selected_users_string %></h3>
+<table class="operating_report_table">
+<tr>
+<td></td>
+<td>Reasonable Expectation*</td>
+<td align="center">-----></td>
+  <% @tasks.each do |task| %>
+    <td><%= if task.is_direct? then task.reasonable_expectation else '' end %></td>
+  <% end %>
+  <td>Hours</td>
+  <% if @show_performance %>
+    <td colspan="3" align="center">Performance</td>
+  <% end %>
+</tr>
+<tr>
+  <td></td>
+  <td class="direct" colspan="2" align="center"><b>Direct</b></td>
+  <td class="indirect" colspan="<%= @table_data[:indirect_task_count] %>" align="center"><b>Indirect</b></td>
+  <td class ="direct" colspan="<%= @table_data[:direct_task_count] %>" align="center"></td>
+</tr>
+<tr>
+<td></td>
+<th class ="direct">Regular Hours</th>
+<th class ="direct">Overtime Hours</th>
+  <% @tasks.each do |task| %>
+    <% if task.is_direct? %>
+      <% units = ' (Count)' %> 
+      <% css_class = 'direct'; %>
+    <% else %> 
+      <% units = ' (Hours)' %>
+      <% css_class = 'indirect' %> 
+    <% end %>
+    <th class="<%= css_class %>"><%= task.name %> <%= units %></th>
+  <% end %>
+  <th><b>Actual Direct Hours</b></th>
+  <% if @show_performance %>
+    <th><b>Utilization</b></th>
+    <th><b>Efficiency</b></th>
+    <th><b>Production</b></th>
+  <% end %>
+</tr>
+<% @date_range.each do |date| %>
+  <tr>
+    <td><%= date %></td>
+    <td><%= minutes_to_hours(@table_data[date][:reg_minutes]) %></td>
+    <td><%= minutes_to_hours(@table_data[date][:ot_minutes]) %></td>
+    <% @tasks.each do |task| %>
+      <td><%= @table_data[date][task.id] %></td>
+    <% end %>
+  <td><b><%= seconds_to_hours(@table_data[date][:actual_direct_seconds]) %></b></td>
+  <% if @show_performance %>
+    <td><b><%= @table_data[date][:utilization] %></b></td>
+    <td><b><%= @table_data[date][:efficiency] %></b></td>
+    <td><b><%= @table_data[date][:production] %></b></td>
+  <% end %>  
+  </tr>
+<% end %>
+<tr>
+  <td><b>Total Volume:</b></td>
+  <td align="center"><b>-</b></td>
+  <td align="center"><b>-</b></td>
+  <% @tasks.each do |task| %>
+    <% if task.is_direct? %>
+      <td><b><%= @table_data[:total_volume][task.id] %></b></td>
+    <% else %>
+      <td align="center"><b>-</b></td>
+    <% end %>
+  <% end %>
+    <td>-</td>
+  <% if @show_performance %>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+  <% end %>
+</tr>
+<tr>
+  <td><b>Total Hours:</b></td>
+  <td><b><%= @table_data[:total_time][:reg_hours] %></b></td>
+  <td><b><%= @table_data[:total_time][:ot_hours] %></b></td>
+  <% @tasks.each do |task| %>
+  <td><b> <%= (@table_data[:total_time][task.id].to_f / (60*60)).round(2) %></b></td>
+  <% end %>
+  <td><b><%= seconds_to_hours(table_data[:actual_direct_seconds_total]) %></b></td>
+  <% if @show_performance %>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+  <% end %>
+</tr>
+</table>

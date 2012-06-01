@@ -1,0 +1,19 @@
+<%= form_tag("/team_performance", method: "post", remote: true ) do %>
+  <div class="field">
+    <%= label_tag :team %>
+    <%= select_tag "team", options_from_collection_for_select(@teams, :id, :name) %>
+  </div>
+  <div class="field">
+    <%= label_tag :users %>
+    <%= select_tag "users", options_from_collection_for_select(@users, :id, :username), multiple: true %>
+  </div>
+  <div class="field">
+    <%= label_tag :start_date %>
+    <%= select_date start_date, :prefix => :start_date %><br />
+  </div>
+  <div class="field">
+    <%= label_tag :end_date %>
+    <%= select_date end_date, :prefix => :end_date %><br />
+  </div>
+  <%= submit_tag "Regenerate Report" %>
+<% end %>

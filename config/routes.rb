@@ -2,6 +2,7 @@ TimeEntryApp::Application.routes.draw do
   match '/home', to: 'home#index'
   match '/admin', to: 'admin#index'
   match '/operating_report', to: 'operating_report#index'#, via: :get
+  match '/team_performance', to: 'team_performance#index'#, via: :get
   match '/performance_board', to: 'performance_board#index'#, via: :get
   match '/change_team', to: 'users#change_team'
 

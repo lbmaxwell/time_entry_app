@@ -26,15 +26,8 @@ production:
   adapter: postgresql
   host: 192.168.0.243
   encoding: utf-8
-  #database: tally_prod #This will become the actual prod database.
-  database: tally #This is currently running as if it were prod.*
+  database: tally_prod
   pool: 5
   username: tally_app
   password: a&f32A$Rfd
   timeout: 5000
-
-# *This was originally supposed to be prod, but the business user driving this project
-# ultimately changed his mind and decided that we were still testing while the new
-# end-users were getting acclimated to the new system. In other words, the data they
-# have been entering is bogus.
-
