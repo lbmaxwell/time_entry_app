@@ -44,9 +44,13 @@ module PerformanceBoardHelper
         end # |time_entry|
         nested_hash[task.id] = count
         table_data[hour] = nested_hash
+
+        # Collect totals for each task
+        total_volume[task.id] += count
       end # |task|
     end # |hour|
-
+    
+    table_data[:total_volume] = total_volume
     return table_data
   end
 

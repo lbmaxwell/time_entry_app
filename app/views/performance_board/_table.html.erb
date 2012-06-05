@@ -16,10 +16,17 @@
   </tr>
   <% @table_data.each do |hour, count_hash| %>
     <tr>
+      <% next if hour == :total_volume %>
       <td><%= hour_int_to_time_string(hour) %></td>
       <% @tasks.each do |task|  %>
       <td><%= count_hash[task.id] %></td>
       <% end %>
     </tr>
   <% end %>
+  <tr>
+    <td><b>Total</b></td>
+    <% @tasks.each do |task|  %>
+      <td><b><%= @table_data[:total_volume][task.id] %></b></td>
+    <% end %>
+  </tr>
 </table>

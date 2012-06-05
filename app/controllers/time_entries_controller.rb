@@ -22,11 +22,17 @@ class TimeEntriesController < ApplicationController
 
     @time_entries = TimeEntry.where(effective_date: @begin..@end, team_id: @selected_team)
 
+    # Block below is homogeneous to ORDER BY in SQL
+    # ORDER BY time_entry.effective_date, user.username, task.name    
+    @time_entries = @time_entries.sort_by do |te|
+      [te.effective_date, te.user.username, te.task.name]
+    end
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @time_entries }
     end
-  end
+  end #def index
 
   # GET /time_entries/1
   # GET /time_entries/1.json

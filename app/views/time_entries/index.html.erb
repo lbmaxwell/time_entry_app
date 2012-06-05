@@ -10,6 +10,7 @@
     <th>Task</th>
     <th>User</th>
     <th>Team</th>
+    <th>Most Recent Comment</th>
     <th></th>
     <th></th>
     <th></th>
@@ -23,6 +24,7 @@
     <td><%= time_entry.task.name %></td>
     <td><%= time_entry.user.username %></td>
     <td><%= time_entry.team.name %></td>
+    <td><%= time_entry.comments.last.comment  unless time_entry.comments.empty? %></td>
     <td><%= link_to 'View', time_entry %></td>
     <td><%= link_to 'Comment', { controller: "comments", action: "new", time_entry: time_entry }  %></td>
     <td><%= link_to 'Edit', edit_time_entry_path(time_entry) %></td>
