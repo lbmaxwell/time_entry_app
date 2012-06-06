@@ -142,6 +142,7 @@ class TimeEntriesController < ApplicationController
     @task = Task.find(params[:time_entry][:task_id])
     @tasks = @time_entry.team.tasks.where(is_active: true)
     @time_entry.allow_nil_for_number_processed = !@task.is_direct?
+    @time_entry.skip_date_range_check = current_user.admin?
 
     respond_to do |format|
       if @time_entry.update_attributes(params[:time_entry])
