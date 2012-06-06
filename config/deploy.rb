@@ -28,6 +28,9 @@ task :production do
   puts "   #\n   #               Enter y/n + enter to continue\n   #"
   puts "   ######################################################################\e[0m\n"
 
+  proceed = STDIN.gets[0..0] rescue nil
+  exit unless proceed == 'y' || proceed == 'Y'
+
   set :environment, "production"
 
   role :web, "192.168.0.244" # Your HTTP server, Apache/etc
