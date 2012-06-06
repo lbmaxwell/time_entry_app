@@ -72,6 +72,17 @@ class PaidTimeEntriesController < ApplicationController
   # GET /paid_time_entries/1/edit
   def edit
     @paid_time_entry = PaidTimeEntry.find(params[:id])
+    @user = @paid_time_entry.user
+    @team = @paid_time_entry.team
+
+    if current_user.admin? && current_user.teams_managed.include?(@team)
+      @users = team_members(@team)
+    else
+      @users = [current_user]
+    end
+
+    @users.sort! { |a,b| a.username <=> b.username }    
+    
     @teams = @paid_time_entry.user.teams
     @teams.sort! { |a,b| a.name <=> b.name }
   end
@@ -80,7 +91,15 @@ class PaidTimeEntriesController < ApplicationController
   # POST /paid_time_entries.json
   def create
     @teams = current_user.teams
-    params[:paid_time_entry][:user_id] = current_user.id
+
+    if current_user.admin?
+      if params[:paid_time_entry][:user_id].empty?
+        params[:paid_time_entry][:user_id] = current_user.id
+      end
+    else
+      params[:paid_time_entry][:user_id] = current_user.id
+    end
+
     params[:paid_time_entry][:minutes] = ((params[:hours].to_i * 60) + params[:minutes].to_i)
     @paid_time_entry = PaidTimeEntry.new(params[:paid_time_entry])
     @paid_time_entry.skip_date_range_check = current_user.admin?
@@ -99,6 +118,14 @@ class PaidTimeEntriesController < ApplicationController
   # PUT /paid_time_entries/1
   # PUT /paid_time_entries/1.json
   def update
+    if current_user.admin?
+      if params[:paid_time_entry][:user_id].empty?
+        params[:paid_time_entry][:user_id] = current_user.id
+      end
+    else
+      params[:paid_time_entry][:user_id] = current_user.id
+    end
+
     @paid_time_entry = PaidTimeEntry.find(params[:id])
     @paid_time_entry.skip_date_range_check = current_user.admin?
 
