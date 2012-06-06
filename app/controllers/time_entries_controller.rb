@@ -57,6 +57,7 @@ class TimeEntriesController < ApplicationController
     @show_change_team_link = true
     @team = current_user.team
     @users = users_for_dropdown
+    @user = current_user
     @tasks = current_user.team.tasks.where(is_active: true)
     @tasks.sort! { |a,b| a.name.downcase <=> b.name.downcase }
 
@@ -71,6 +72,8 @@ class TimeEntriesController < ApplicationController
     @time_entry = TimeEntry.find(params[:id])
     @hide_number_processed = !@time_entry.task.is_direct? 
     @hide_time_value_fields = @time_entry.task.is_direct?
+
+    @user = @time_entry.user
 
     @show_change_team_link = false
    
