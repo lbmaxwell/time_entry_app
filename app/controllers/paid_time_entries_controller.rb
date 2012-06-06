@@ -126,8 +126,10 @@ class PaidTimeEntriesController < ApplicationController
       params[:paid_time_entry][:user_id] = current_user.id
     end
 
+    @teams = current_user.teams
     @paid_time_entry = PaidTimeEntry.find(params[:id])
     @paid_time_entry.skip_date_range_check = current_user.admin?
+    @user = @paid_time_entry.user
 
     respond_to do |format|
       if @paid_time_entry.update_attributes(params[:paid_time_entry])
