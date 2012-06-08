@@ -48,7 +48,7 @@ module OperatingReportHelper
     table_data[:indirect_task_count] = tasks.find_all{|t| !t.is_direct?}.count
     table_data[:direct_task_count] = tasks.find_all{|t| t.is_direct?}.count
 
-    if is_daily 
+    if is_daily
       date_range = (start_date..end_date)
     else
       date_range = last_days_of_week_for_date_range(start_date, end_date)

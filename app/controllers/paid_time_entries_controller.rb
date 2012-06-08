@@ -102,6 +102,7 @@ class PaidTimeEntriesController < ApplicationController
 
     params[:paid_time_entry][:minutes] = ((params[:hours].to_i * 60) + params[:minutes].to_i)
     @paid_time_entry = PaidTimeEntry.new(params[:paid_time_entry])
+    @user = @paid_time_entry.user
     @paid_time_entry.skip_date_range_check = current_user.admin?
 
     respond_to do |format|
