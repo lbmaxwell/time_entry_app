@@ -8,4 +8,12 @@ class Assignment < ActiveRecord::Base
   validates :user_id, presence: true
   validates :role_id,  presence: true
   validates :team_id,  presence: true
+
+  def active?
+    if self.end_date.nil? || self.end_date >= Date.today
+      true
+    else
+      false
+    end
+  end
 end

@@ -18,7 +18,7 @@ module TimeEntriesHelper
       @users = []
 
       current_user.team.assignments.each do |assignment|
-        @users.push(assignment.user)
+        @users.push(assignment.user) if assignment.active?
         @users.uniq!
       end
 
