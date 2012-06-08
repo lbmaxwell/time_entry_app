@@ -78,7 +78,7 @@ class TimeEntriesController < ApplicationController
     @show_change_team_link = false
    
     @team = @time_entry.team
-    @users = users_for_dropdown
+    @users = users_for_dropdown_edit(@time_entry)
 
     @tasks = @time_entry.team.tasks#current_user.team.tasks.where(is_active: true)
     @tasks.sort! { |a,b| a.name.downcase <=> b.name.downcase }
@@ -90,6 +90,7 @@ class TimeEntriesController < ApplicationController
     @tasks = current_user.team.tasks.where(is_active: true)
     @team = current_user.team
 
+    @user = current_user
     @users = users_for_dropdown
 
     unless params[:time_entry][:task_id].empty?

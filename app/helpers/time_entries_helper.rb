@@ -13,11 +13,28 @@ module TimeEntriesHelper
     date = date.to_date
   end
 
-  def users_for_dropdown
+  def users_for_dropdown #works great for new/create, but not edit/update
     if current_user.admin? && current_user.teams_managed.include?(current_user.team)
       @users = []
 
       current_user.team.assignments.each do |assignment|
+        @users.push(assignment.user) if assignment.active?
+        @users.uniq!
+      end
+
+      @users.sort! do |a,b|
+        a.username.downcase <=> b.username.downcase
+      end
+    else
+      @users = [current_user]
+    end
+  end
+
+  def users_for_dropdown_edit(time_entry)
+    if current_user.admin? && current_user.teams_managed.include?(time_entry.team)
+      @users = []
+
+      time_entry.team.assignments.each do |assignment|
         @users.push(assignment.user) if assignment.active?
         @users.uniq!
       end
