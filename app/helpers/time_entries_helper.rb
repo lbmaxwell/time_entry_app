@@ -15,7 +15,14 @@ module TimeEntriesHelper
 
   def users_for_dropdown
     if current_user.admin? && current_user.teams_managed.include?(current_user.team)
-      @users = current_user.team.users.sort! do |a,b|
+      @users = []
+
+      current_user.team.assignments.each do |assignment|
+        @users.push(assignment.user)
+        @users.uniq!
+      end
+
+      @users.sort! do |a,b|
         a.username.downcase <=> b.username.downcase
       end
     else
