@@ -80,8 +80,9 @@ class TimeEntriesController < ApplicationController
     @team = @time_entry.team
     @users = users_for_dropdown_edit(@time_entry)
 
-    @tasks = @time_entry.team.tasks#current_user.team.tasks.where(is_active: true)
-    @tasks.sort! { |a,b| a.name.downcase <=> b.name.downcase }
+    @tasks = [@time_entry.task]
+    #@tasks = @time_entry.team.tasks#current_user.team.tasks.where(is_active: true)
+    #@tasks.sort! { |a,b| a.name.downcase <=> b.name.downcase }
   end
 
   # POST /time_entries
