@@ -32,7 +32,7 @@
   </div>
   <div class="field">
     <%= f.label :effective_date %> (yyyy-mm-dd)<br />
-    <%= f.text_field :effective_date %>
+    <%= f.text_field :effective_date, { value: Date.today } %>
   </div>
   <div class="field">
     <%= label_tag :comment %> (optional, except for "Other" tasks)<br />

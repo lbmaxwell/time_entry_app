@@ -33,7 +33,7 @@
   </div>
   <div class="field">
     <%= f.label :effective_date %><br />
-    <%= f.date_select :effective_date %>
+    <%= f.text_field :effective_date, { value: Date.today } %>
   </div>
 
   <div class="actions">
