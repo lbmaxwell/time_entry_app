@@ -10,9 +10,10 @@ class TimeEntry < ActiveRecord::Base
   validates :task_id, presence: true
   validates :seconds, presence: true, numericality: { only_integer: true, 
               greater_than_or_equal_to: 0 }
-  validates :effective_date, presence: true, inclusion: { in: Date.today..(Date.today + 7),
+  validates :effective_date, inclusion: { in: Date.today..(Date.today + 7),
               message: "must be between #{Date.today} and #{Date.today + 7}" }, 
                 unless: :skip_date_range_check
+  validates :effective_date, presence: true
   validates :team_id, presence: true
   validates :number_processed, presence:true, numericality: { only_integer: true,
                 greater_than_or_equal_to: 1 }, unless: :allow_nil_for_number_processed

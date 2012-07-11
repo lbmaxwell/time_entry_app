@@ -31,8 +31,8 @@
     <%= f.number_field :number_processed, min: 0, hidden: @hide_number_processed %>
   </div>
   <div class="field">
-    <%= f.label :effective_date %><br />
-    <%= f.date_select :effective_date %>
+    <%= f.label :effective_date %> (yyyy-mm-dd)<br />
+    <%= f.text_field :effective_date %>
   </div>
   <div class="field">
     <%= label_tag :comment %> (optional, except for "Other" tasks)<br />
