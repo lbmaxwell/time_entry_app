@@ -54,7 +54,7 @@ module TeamPerformanceHelper
     if params[:start_date].nil?
       start_date = first_day_in_week
     else
-      start_date = input_params_to_date(params[:start_date])
+      start_date = params[:start_date].to_date
     end
   end
 
@@ -62,7 +62,7 @@ module TeamPerformanceHelper
     if params[:end_date].nil?
       end_date = last_day_in_week
     else
-      end_date = input_params_to_date(params[:end_date])
+      end_date = params[:end_date]
     end
   end
 end

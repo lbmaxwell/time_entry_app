@@ -9,11 +9,11 @@
   </div>
   <div class="field">
     <%= label_tag :start_date %>
-    <%= select_date start_date, :prefix => :start_date %><br />
+    <%= text_field_tag  :start_date, start_date %><br />
   </div>
   <div class="field">
     <%= label_tag :end_date %>
-    <%= select_date end_date, :prefix => :end_date %><br />
+    <%= text_field_tag :end_date, end_date %><br />
   </div>
   <div class="field">
     <%= label_tag :display_by_week %>
