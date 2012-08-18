@@ -33,23 +33,23 @@ task :production do
 
   set :environment, "production"
 
-  role :web, "192.168.0.244" # Your HTTP server, Apache/etc
-  role :app, "192.168.0.244" # This may be the same as your `Web` server
+  role :web, "10.95.10.22" # Your HTTP server, Apache/etc
+  role :app, "10.95.10..22" # This may be the same as your `Web` server
 
   # "role :db" (below) is only where migrations will be run.
   #The actual database server for the app is completely configured in config/database.yml.
-  role :db,  "192.168.0.244", primary: true # This is where Rails migrations will run
+  role :db,  "10.95.10.20", primary: true # This is where Rails migrations will run
 end
 
 task :staging do
-  role :web, "192.168.0.241" # Your HTTP server, Apache/etc
-  role :app, "192.168.0.241" # This may be the same as your `Web` server
+  role :web, "10.95.10.21" # Your HTTP server, Apache/etc
+  role :app, "10.95.10.21" # This may be the same as your `Web` server
 
   set :environment, "test"
 
   # "role :db" (below) is only where migrations will be run.
   #The actual database server for the app is completely configured in config/database.yml.
-  role :db,  "192.168.0.241", primary: true # This is where Rails migrations will run
+  role :db,  "10.95.10.20", primary: true # This is where Rails migrations will run
 end
 
 #SCM options
