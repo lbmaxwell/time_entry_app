@@ -34,7 +34,7 @@ task :production do
   set :environment, "production"
 
   role :web, "10.95.10.22" # Your HTTP server, Apache/etc
-  role :app, "10.95.10..22" # This may be the same as your `Web` server
+  role :app, "10.95.10.22" # This may be the same as your `Web` server
 
   # "role :db" (below) is only where migrations will be run.
   #The actual database server for the app is completely configured in config/database.yml.
