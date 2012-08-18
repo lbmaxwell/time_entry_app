@@ -38,7 +38,7 @@ task :production do
 
   # "role :db" (below) is only where migrations will be run.
   #The actual database server for the app is completely configured in config/database.yml.
-  role :db,  "10.95.10.20", primary: true # This is where Rails migrations will run
+  role :db,  "10.95.10.22", primary: true # This is where Rails migrations will run
 end
 
 task :staging do
@@ -49,7 +49,7 @@ task :staging do
 
   # "role :db" (below) is only where migrations will be run.
   #The actual database server for the app is completely configured in config/database.yml.
-  role :db,  "10.95.10.20", primary: true # This is where Rails migrations will run
+  role :db,  "10.95.10.21", primary: true # This is where Rails migrations will run
 end
 
 #SCM options
